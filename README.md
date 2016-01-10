@@ -4,7 +4,7 @@
 
 Unlike `Bluebird` or `Q`, <insert name here> aims to be used with native promises. You can use each util separately without requiring the whole library.
 
-This module includes the most common utils needed to work with collections of promises (or values): each, map, filter, reduce, sort; as well as other common patterns when using promises: delay, timeout, retry, spread, thenIf, catchIf, ...
+This module includes the most common utils needed to work with collections of promises (or values): each, map, filter, reduce, sort; as well as other common patterns when using promises: delay, timeout, retry, spread, catchIf, ...
 
 **Example:**
 ```javascript
@@ -104,7 +104,6 @@ Promise.resolve([1, 2, 3])
 ### Others
 #### spread(fn)
 #### retry(fn, options)
-#### thenIf(predicate|predicateFn, fn)
 #### catchIf(predicate|predicateFn, fn)
 #### delay(n)
 #### timeout(n)
