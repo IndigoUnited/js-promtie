@@ -13,14 +13,21 @@
 #### nodeify(fn)
 
 ### Collections
-#### props(object, fn) (find a better name)
 #### each(array, fn)
-#### map(array, fn)
+#### map(array, fn, options)
 #### filter(array, fn)
 #### reduce(array, fn)
+#### sort(array, fn)
+#### settle(array, fn)
+#### props(object, fn) (find a better name)
+#### spread(fn)
 
 #### Others
+### retry(fn, options)
+### thenIf(predicate|predicateFn, fnSuccess, fnError)
 ### catchIf(predicateFn, fn)
+### delay(n)
+### timeout(n)
 
 ## Tests
 
