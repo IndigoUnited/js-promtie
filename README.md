@@ -24,8 +24,8 @@
 
 #### Others
 ### retry(fn, options)
-### thenIf(predicate|predicateFn, fnSuccess, fnError)
-### catchIf(predicateFn, fn)
+### thenIf(predicate|predicateFn, fn)
+### catchIf(predicate|predicateFn, fn)
 ### delay(n)
 ### timeout(n)
 
