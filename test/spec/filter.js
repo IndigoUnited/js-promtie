@@ -40,10 +40,7 @@ test('filter(arr, fn): filter function returns promise', (t) => {
             t.is(n, input[i]);
             t.same(array, input);
 
-            return Promise.resolve()
-            .then(() => {
-                return n > 2;
-            });
+            return Promise.resolve(n > 2);
         }
     )
     .then((arr) => {

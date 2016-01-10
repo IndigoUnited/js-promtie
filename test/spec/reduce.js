@@ -54,3 +54,16 @@ test('reduce(arr, fn)', (t) => {
     )
     .then((result) => t.same(result, 10));
 });
+
+test('reduce(arr, fn): deal with promise failure', (t) => {
+    const input = [1, 2, 3, 4];
+
+    return t.throws(reduce([Promise.resolve(1), 2, Promise.reject(new Error('Failed to fetch third value')), 4],
+        (acc, n, i, length) => {
+            t.is(n, input[i]);
+            t.is(length, input.length);
+
+            return acc + n;
+        }
+    ), 'Failed to fetch third value');
+});
