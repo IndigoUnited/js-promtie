@@ -5,3 +5,4 @@
 exports.each = require('./lib/each');
 exports.map = require('./lib/map');
 exports.filter = require('./lib/filter');
+exports.reduce = require('./lib/reduce');

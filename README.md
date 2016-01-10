@@ -4,7 +4,7 @@
 
 Unlike `Bluebird` or `Q`, <insert name here> aims to be used with native promises. You can use each util separately without requiring the whole library.
 
-This module includes the most common utils needed to work with collections of promises (or values): each, map, filter, reduce, sort; as well as other common patterns when using promises: delay, timeout, retry, spread, catchIf, ...
+This module includes the most common utils needed to work with collections of promises (or values): each, map, filter, reduce; as well as other common patterns when using promises: delay, timeout, retry, spread, catchIf, ...
 
 **Example:**
 ```javascript
@@ -68,7 +68,7 @@ Promise.resolve([1, 2, 3])
 .then(pages => console.log('pages', pages));
 ```
 
-#### filter(array, fn, options) -> Promise | Function
+#### filter([array], fn, options) -> Promise | Function
 
 Iterates over the `array` and filters out the array values if they do not pass the function test.
 Concurrency can be controller with `options.concurrency`.
@@ -91,8 +91,28 @@ Promise.resolve([1, 2, 3])
 .then(pages => console.log('odd pages', pages) );
 ```
 
-#### reduce(array, fn)
-#### sort(array, fn)
+#### reduce([array], fn, [initialValue]) -> Promise | Function
+
+Iterates over the array and calls fn on each value and accumulates the result to reduce it to a single value.
+
+**Example:**
+```javascript
+import { reduce } from 'promise-utils';
+
+reduce([1, 2, 3], (acc, value, index, length) => acc + value, 0)
+.then(total => console.log('total sum:', total));
+```
+
+`reduce(fn, [initialValue]) -> Function`: The array can be omitted in favor of returning an function that takes the array instead. **Example:**
+
+```javascript
+import { reduce } from 'promise-utils';
+
+Promise.resolve([1, 2, 3])
+.then(reduce((acc, value, index, length) => acc + value, 0))
+.then(total => console.log('total sum:', total));
+```
+
 #### settle(array, fn)
 #### props(object, fn) (find a better name)
 
