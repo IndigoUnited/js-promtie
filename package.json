@@ -1,0 +1,29 @@
+{
+  "name": "promise-utils",
+  "version": "0.1.0",
+  "description": "Set of promise utils to use with native Promises",
+  "main": "index.js",
+  "scripts": {
+    "test": "ava"
+  },
+  "bugs": {
+    "url": "https://github.com/IndigoUnited/node-promise-utils/issues/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/IndigoUnited/node-promise-utils.git"
+  },
+  "keywords": [
+    "utils",
+    "promise"
+  ],
+  "author": "IndigoUnited <hello@indigounited.com> (http://indigounited.com)",
+  "license": "MIT",
+  "engines": {
+    "node": ">=0.12"
+  },
+  "devDependencies": {
+    "@carsy/eslint-config": "git+ssh://git@github.com/carsy/eslint-config.git",
+    "ava": "^0.9.1"
+  }
+}

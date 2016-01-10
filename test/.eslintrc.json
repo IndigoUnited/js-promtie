@@ -1,0 +1,9 @@
+{
+    "root": true,
+    "extends": [
+        "../node_modules/@carsy/eslint-config/es5.js",
+        "../node_modules/@carsy/eslint-config/es6.js",
+        "../node_modules/@carsy/eslint-config/addons/node.js",
+        "../node_modules/@carsy/eslint-config/addons/es6-modules.js"
+    ]
+}
