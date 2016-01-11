@@ -2,7 +2,9 @@
 
  > Small utilities to be used with native promises.
 
-Unlike `Bluebird` or `Q`, <insert name here> aims to be used with native promises. You can use each util separately without requiring the whole library.
+Unlike `Bluebird` or `Q`, promise-utils aims to be used with native promises. It it very easy to start a chain of operations or to intersect a set of operations with an each or map iteration.
+
+You can also use each util separately without requiring the whole library.
 
 This module includes the most common utils needed to work with collections of promises (or values): each, map, filter, reduce; as well as other common patterns when using promises: delay, timeout, retry, spread, catchIf, ...
 
