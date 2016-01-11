@@ -115,8 +115,22 @@ Promise.resolve([1, 2, 3])
 .then(total => console.log('total sum:', total));
 ```
 
-#### settle(array, fn)
-#### props(object, fn) (find a better name)
+#### values(object)
+
+Resolve the values of an object, whether they are promises or not.
+**Example:**
+
+```javascript
+import { values } from 'promtie';
+
+values({
+    key1: 'value1',
+    key2: Promise.resolve('value2'),
+    key3: Promise.resolve('value3'),
+    key4: 'value4',
+})
+.then(result => console.log('got value 3:', result.key3)); // 'value3'
+```
 
 ### Promisification
 #### promisify(fn)
@@ -124,7 +138,6 @@ Promise.resolve([1, 2, 3])
 
 ### Others
 #### spread(fn)
-#### retry(fn, options)
 #### nodeify([fn]) -> Function
 
 Returns a function that calls the callback function with the resulting value, ignoring the error.
@@ -155,12 +168,12 @@ Useful for treating different cases of errors without cluttering the code with s
 import { catchIf } from 'promtie';
 
 db.getUser(userId)
-.catch(catchIf(errors.isNotFoundError, err => {
+.catch(catchIf(isNotFoundError, err => {
     log.error(err, 'User with id ${userId} does not exist.');
 
     throw err;
 }))
-.catch(catchIf(errors.isConnectionTimeoutError, err => {
+.catch(catchIf(isConnectionTimeoutError, err => {
     log.error(err, 'Service Unavailable. Please try again later.');
 
     throw err;
@@ -170,6 +183,7 @@ db.getUser(userId)
 
 ```
 
+#### retry(fn, options)
 #### delay(n)
 #### timeout(n)
 
