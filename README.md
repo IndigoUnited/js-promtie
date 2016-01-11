@@ -121,6 +121,10 @@ Promise.resolve([1, 2, 3])
 ### Promisification
 #### promisify(fn)
 #### promisifyAll(object)
+
+### Others
+#### spread(fn)
+#### retry(fn, options)
 #### nodeify([fn]) -> Function
 
 Returns a function that calls the callback function with the resulting value, ignoring the error.
@@ -139,10 +143,6 @@ function fetch(cb) {
 }
 ```
 
-
-### Others
-#### spread(fn)
-#### retry(fn, options)
 #### catchIf(predicateFn, fn) -> Function
 
 Returns a function that will handle an error if it passes the predicate function test.

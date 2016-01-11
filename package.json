@@ -7,11 +7,11 @@
     "test": "ava --tap | tap-nyan"
   },
   "bugs": {
-    "url": "https://github.com/IndigoUnited/node-promtie/issues/"
+    "url": "https://github.com/IndigoUnited/promtie/issues/"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/IndigoUnited/node-promtie.git"
+    "url": "git://github.com/IndigoUnited/promtie.git"
   },
   "keywords": [
     "utils",
