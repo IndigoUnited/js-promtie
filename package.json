@@ -1,5 +1,5 @@
 {
-  "name": "promise-utils",
+  "name": "promtie",
   "version": "0.1.0",
   "description": "Set of promise utils to use with native Promises",
   "main": "index.js",
@@ -7,11 +7,11 @@
     "test": "ava --tap | tap-nyan"
   },
   "bugs": {
-    "url": "https://github.com/IndigoUnited/node-promise-utils/issues/"
+    "url": "https://github.com/IndigoUnited/node-promtie/issues/"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/IndigoUnited/node-promise-utils.git"
+    "url": "git://github.com/IndigoUnited/node-promtie.git"
   },
   "keywords": [
     "utils",

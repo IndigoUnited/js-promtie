@@ -1,8 +1,8 @@
-# node-promise-utils
+# node-promtie
 
  > Small utilities to be used with native promises.
 
-Unlike `Bluebird` or `Q`, promise-utils aims to be used with native promises. It it very easy to start a chain of operations or to intersect a set of operations with an each or map iteration.
+Unlike `Bluebird` or `Q`, promtie aims to be used with native promises. It it very easy to start a chain of operations or to intersect a set of operations with an each or map iteration.
 
 You can also use each util separately without requiring the whole library.
 
@@ -10,7 +10,7 @@ This module includes the most common utils needed to work with collections of pr
 
 **Example:**
 ```javascript
-import { each, map } from 'promise-utils';
+import { each, map } from 'promtie';
 
 // Request all the pages at the same time
 map([1, 2, Promise.resolve(3)], requestPage)
@@ -20,7 +20,7 @@ map([1, 2, Promise.resolve(3)], requestPage)
 
 ## Installation
 
-`$ npm install --save promise-utils`
+`$ npm install --save promtie`
 
 
 ## Usage
@@ -32,7 +32,7 @@ Iterates over the `array` and calls `fn` on each value (promise that resolves to
 
 **Example:**
 ```javascript
-import { each } from 'promise-utils';
+import { each } from 'promtie';
 
 each([1, 2, 3], (value, index, length) => requestPage(value))
 .then(pages => console.log('pages', pages) );
@@ -40,7 +40,7 @@ each([1, 2, 3], (value, index, length) => requestPage(value))
 
 `each(fn) -> Function`: The array can be omitted in favor of returning an function that takes the array instead. **Example:**
 ```javascript
-import { each } from 'promise-utils';
+import { each } from 'promtie';
 
 Promise.resolve([1, 2, 3])
 .then(each((value, index, length) => requestPage(value)))
@@ -54,7 +54,7 @@ Concurrency can be controller with `options.concurrency`.
 
 **Example:**
 ```javascript
-import { map } from 'promise-utils';
+import { map } from 'promtie';
 
 map([1, 2, 3], (value, index, length) => requestPage(value), { concurrency: 2 })
 .then(pages => console.log('pages', pages) );
@@ -63,7 +63,7 @@ map([1, 2, 3], (value, index, length) => requestPage(value), { concurrency: 2 })
 `map(fn, options) -> Function`: The array can be omitted in favor of returning an function that takes the array instead. **Example:**
 
 ```javascript
-import { map } from 'promise-utils';
+import { map } from 'promtie';
 
 Promise.resolve([1, 2, 3])
 .then(map((value, index, length) => requestPage(value), { concurrency: 2 }))
@@ -77,7 +77,7 @@ Concurrency can be controller with `options.concurrency`.
 
 **Example:**
 ```javascript
-import { filter } from 'promise-utils';
+import { filter } from 'promtie';
 
 filter([1, 2, 3], (value, index, length) => isOdd(value), { concurrency: 2 })
 .then(pages => console.log('odd pages', pages));
@@ -86,7 +86,7 @@ filter([1, 2, 3], (value, index, length) => isOdd(value), { concurrency: 2 })
 `filter(fn, options) -> Function`: The array can be omitted in favor of returning an function that takes the array instead. **Example:**
 
 ```javascript
-import { filter } from 'promise-utils';
+import { filter } from 'promtie';
 
 Promise.resolve([1, 2, 3])
 .then(filter((value, index, length) => isOdd(value), { concurrency: 2 }))
@@ -99,7 +99,7 @@ Iterates over the array and calls fn on each value and accumulates the result to
 
 **Example:**
 ```javascript
-import { reduce } from 'promise-utils';
+import { reduce } from 'promtie';
 
 reduce([1, 2, 3], (acc, value, index, length) => acc + value, 0)
 .then(total => console.log('total sum:', total));
@@ -108,7 +108,7 @@ reduce([1, 2, 3], (acc, value, index, length) => acc + value, 0)
 `reduce(fn, [initialValue]) -> Function`: The array can be omitted in favor of returning an function that takes the array instead. **Example:**
 
 ```javascript
-import { reduce } from 'promise-utils';
+import { reduce } from 'promtie';
 
 Promise.resolve([1, 2, 3])
 .then(reduce((acc, value, index, length) => acc + value, 0))
@@ -128,7 +128,7 @@ If no callback is provided, the returned function simply returns the value.
 **Example:**
 
 ```javascript
-import { nodeify } from 'promise-utils';
+import { nodeify } from 'promtie';
 
 function cb(err, value) {
     if (err) return console.error(err);
