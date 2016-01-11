@@ -119,7 +119,24 @@ Promise.resolve([1, 2, 3])
 ### Promisification
 #### promisify(fn)
 #### promisifyAll(object)
-#### nodeify(fn)
+#### nodeify( ) -> Function
+
+Returns a function that calls the callback function with the resulting value.
+If no callback is provided, the returned function simply returns the value.
+**Example:**
+
+```javascript
+import { nodeify } from 'promise-utils';
+
+function cb(err, value) {
+    if (err) return console.error(err);
+
+    console.log('got value', value);
+}
+
+Promise.resolve(1)
+.then(nodeify(cb), cb);
+```
 
 ### Others
 #### spread(fn)
