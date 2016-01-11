@@ -1,7 +1,7 @@
 {
   "name": "promtie",
   "version": "0.1.0",
-  "description": "Set of promise utils to use with native Promises",
+  "description": "Neatly dress up your native promises with simple and useful utils.",
   "main": "index.js",
   "scripts": {
     "test": "ava --tap | tap-nyan"

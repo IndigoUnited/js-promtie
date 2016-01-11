@@ -1,6 +1,6 @@
-# node-promtie
+# Promtie
 
- > Small utilities to be used with native promises.
+ > Neatly dress up your native promises with simple and useful utils.
 
 Unlike `Bluebird` or `Q`, promtie aims to be used with native promises. It it very easy to start a chain of operations or to intersect a set of operations with an each or map iteration.
 
@@ -121,29 +121,55 @@ Promise.resolve([1, 2, 3])
 ### Promisification
 #### promisify(fn)
 #### promisifyAll(object)
-#### nodeify( ) -> Function
+#### nodeify([fn]) -> Function
 
-Returns a function that calls the callback function with the resulting value.
+Returns a function that calls the callback function with the resulting value, ignoring the error.
 If no callback is provided, the returned function simply returns the value.
+Useful for APIs that still want to support callback style.
+
 **Example:**
 
 ```javascript
 import { nodeify } from 'promtie';
 
-function cb(err, value) {
-    if (err) return console.error(err);
-
-    console.log('got value', value);
+// Function can be used with callback style or promise style
+function fetch(cb) {
+    return Promise.resolve(1)
+    .then(nodeify(cb), cb);
 }
-
-Promise.resolve(1)
-.then(nodeify(cb), cb);
 ```
+
 
 ### Others
 #### spread(fn)
 #### retry(fn, options)
-#### catchIf(predicate|predicateFn, fn)
+#### catchIf(predicateFn, fn) -> Function
+
+Returns a function that will handle an error if it passes the predicate function test.
+If the predicate returns false, the error is propagated.
+Useful for treating different cases of errors without cluttering the code with switch cases/ifs.
+
+**Example:**
+
+```javascript
+import { catchIf } from 'promtie';
+
+db.getUser(userId)
+.catch(catchIf(errors.isNotFoundError, err => {
+    log.error(err, 'User with id ${userId} does not exist.');
+
+    throw err;
+}))
+.catch(catchIf(errors.isConnectionTimeoutError, err => {
+    log.error(err, 'Service Unavailable. Please try again later.');
+
+    throw err;
+}));
+// If the error thrown was not a NotFoundError or a ConnectionTimeoutError
+// the error continues to be thrown.
+
+```
+
 #### delay(n)
 #### timeout(n)
 
