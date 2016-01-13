@@ -50,7 +50,7 @@ Promise.resolve([1, 2, 3])
 #### map([array], fn, options) -> Promise | Function
 
 Iterates over the `array` and calls `fn` on each value (promise that resolves to a value) in parallel.
-Concurrency can be controller with `options.concurrency`.
+Concurrency can be controlled with `options.concurrency`.
 
 **Example:**
 ```javascript
@@ -73,7 +73,7 @@ Promise.resolve([1, 2, 3])
 #### filter([array], fn, options) -> Promise | Function
 
 Iterates over the `array` and filters out the array values if they do not pass the function test.
-Concurrency can be controller with `options.concurrency`.
+Concurrency can be controlled with `options.concurrency`.
 
 **Example:**
 ```javascript
@@ -115,9 +115,9 @@ Promise.resolve([1, 2, 3])
 .then(total => console.log('total sum:', total));
 ```
 
-#### values(object)
+#### values(object|fn) -> Promise | Function
 
-Resolve the values of an object, whether they are promises or not.
+Resolve the values of an object, whether they are promises or not, fulfilled.
 **Example:**
 
 ```javascript
@@ -132,12 +132,41 @@ values({
 .then(result => console.log('got value 3:', result.key3)); // 'value3'
 ```
 
+`values(fn) -> Function`: Alternatively, pass a function that will receive the resolved object values in favor of returning a function that takes the object instead. The handle function return value will be the fulfillment value. **Example:**
+
+```javascript
+import { values } from 'promtie';
+
+Promise.resolve({
+    key1: 'value1',
+    key2: Promise.resolve('value2'),
+    key3: Promise.resolve('value3'),
+    key4: 'value4',
+})
+.then(values(result => console.log('got value 3:', result.key3))) // 'value3'
+```
+
 ### Promisification
 #### promisify(fn)
 #### promisifyAll(object)
 
 ### Others
-#### spread(fn)
+#### spread(fn) -> Function
+
+Spreads array values to the arguments of `fn`.
+**Example:**
+
+```javascript
+import { spread} from 'promtie';
+
+Promise.resolve([fetchData(), fetchMetadata(), 'v0.2.1'])
+.then(spread(function (data, meta, version) {
+    console.log('got data:', data);
+    console.log('meta:', meta);
+    console.log('version:', version);
+}));
+```
+
 #### nodeify([fn]) -> Function
 
 Returns a function that calls the callback function with the resulting value, ignoring the error.
@@ -180,7 +209,6 @@ db.getUser(userId)
 }));
 // If the error thrown was not a NotFoundError or a ConnectionTimeoutError
 // the error continues to be thrown.
-
 ```
 
 #### retry(fn, options)
