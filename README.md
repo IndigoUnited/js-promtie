@@ -151,14 +151,34 @@ Promise.resolve({
 #### promisifyAll(object) -> Object
 
 ### Others
-#### try(fn) -> Function
+#### attempt(fn) -> Promise
+
+Start a chain of promises while mapping synchronous exceptions to promise rejections.
+**Example:**
+
+```javascript
+import { readFileSync } from 'fs';
+import { attempt } from 'promtie';
+
+attempt(() => {
+    return JSON.parse(readFileSync('unicorn.json').toString());
+})
+.then(unicorn => {
+    console.log('Unicorn\'s name is:', unicorn.name);
+}, err => { // Catch errors as ENOENT or SyntaxError (for invalid json)
+    console.error('Failed to read unicorn:', err);
+    console.error(err.stack);
+});
+```
+
+
 #### spread(fn) -> Function
 
 Spreads array values to the arguments of `fn`.
 **Example:**
 
 ```javascript
-import { spread} from 'promtie';
+import { spread } from 'promtie';
 
 Promise.resolve([fetchData(), fetchMetadata(), 'v0.2.1'])
 .then(spread(function (data, meta, version) {
@@ -251,7 +271,7 @@ function fetch(cb) {
 ```
 
 #### end(fn) -> Function
-Helper to end a promise with a single function, regardless of the promise's resolved value or rejection.
+Helper to "end" a promise with a single function, regardless of the promise's resolved value or rejection.
 The promise fulfillment value is maintained and the rejection error is propagated as well.
 **Example:**
 

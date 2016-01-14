@@ -32,6 +32,8 @@ test('delay(n)', (t) => {
 test('delay(n): deal with promise failure', (t) => {
     const start = Date.now();
 
+    t.plan(2);
+
     return Promise.reject(new Error('delay'))
     .then(null, delay(2000))
     .catch((err) => {

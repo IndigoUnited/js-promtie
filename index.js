@@ -17,7 +17,7 @@ exports.values = require('./lib/values');
 // exports.promisifyAll = require('./lib/promisifyAll');
 
 // Others
-// exports.try = require('./lib/try');
+exports.attempt = require('./lib/attempt');
 exports.spread = require('./lib/spread');
 // exports.retry = require('./lib/retry');
 exports.delay = require('./lib/delay');
