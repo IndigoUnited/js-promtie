@@ -151,6 +151,7 @@ Promise.resolve({
 #### promisifyAll(object) -> Object
 
 ### Others
+#### try(fn) -> Function
 #### spread(fn) -> Function
 
 Spreads array values to the arguments of `fn`.
@@ -166,6 +167,44 @@ Promise.resolve([fetchData(), fetchMetadata(), 'v0.2.1'])
     console.log('version:', version);
 }));
 ```
+
+#### retry(fn, options)
+#### delay(n, [fn]) -> Promise | Function
+
+Delays the execution of the next promise by `n` milliseconds.
+
+**Example:**
+
+```javascript
+import { map, delay } from 'promtie';
+
+map(users, user => {
+    return fetchActivity(user.id)
+    .then(delay(250)); // Wait 250 milliseconds in between requests
+});
+
+// Also works with promise failures
+map(users, user => {
+    return fetchActivity(user.id)
+    .then(null, delay(250)); // Wait 250 milliseconds in between requests on failures
+});
+```
+
+`delay(n, fn) -> Promise`: Alternatively, pass a `n` delay and function in favor of returning a promise.
+Useful for starting a promise chain with a delay.
+**Example:**
+
+```javascript
+import { delay } from 'promtie';
+
+// Wait 200 milliseconds to start the server
+delay(200, server.listen)
+.then(app => {
+    console.log('app listening on ${app.host}');
+});
+```
+
+#### timeout(n)
 
 #### catchIf(predicateFn, fn) -> Function
 
@@ -214,6 +253,7 @@ function fetch(cb) {
 #### end(fn) -> Function
 Helper to end a promise with a single function, regardless of the promise's resolved value or rejection.
 The promise fulfillment value is maintained and the rejection error is propagated as well.
+**Example:**
 
 ```javascript
 import { end } from 'promtie';
@@ -229,9 +269,6 @@ db.getUser(userId)
 .catch(end(db.connection.close));
 ```
 
-#### retry(fn, options)
-#### delay(n)
-#### timeout(n)
 
 ## Tests
 
