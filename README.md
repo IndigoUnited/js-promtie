@@ -147,8 +147,8 @@ Promise.resolve({
 ```
 
 ### Promisification
-#### promisify(fn)
-#### promisifyAll(object)
+#### promisify(fn) -> Function
+#### promisifyAll(object) -> Object
 
 ### Others
 #### spread(fn) -> Function
@@ -165,24 +165,6 @@ Promise.resolve([fetchData(), fetchMetadata(), 'v0.2.1'])
     console.log('meta:', meta);
     console.log('version:', version);
 }));
-```
-
-#### nodeify([fn]) -> Function
-
-Returns a function that calls the callback function with the resulting value, ignoring the error.
-If no callback is provided, the returned function simply returns the value.
-Useful for APIs that still want to support callback style.
-
-**Example:**
-
-```javascript
-import { nodeify } from 'promtie';
-
-// Function can be used with callback style or promise style
-function fetch(cb) {
-    return Promise.resolve(1)
-    .then(nodeify(cb), cb);
-}
 ```
 
 #### catchIf(predicateFn, fn) -> Function
@@ -209,6 +191,42 @@ db.getUser(userId)
 }));
 // If the error thrown was not a NotFoundError or a ConnectionTimeoutError
 // the error continues to be thrown.
+```
+
+#### nodeify([fn]) -> Function
+
+Returns a function that calls the callback function with the resulting value, ignoring the error.
+If no callback is provided, the returned function simply returns the value.
+Useful for APIs that still want to support callback style.
+
+**Example:**
+
+```javascript
+import { nodeify } from 'promtie';
+
+// Function can be used with callback style or promise style
+function fetch(cb) {
+    return Promise.resolve(1)
+    .then(nodeify(cb), cb);
+}
+```
+
+#### end(fn) -> Function
+Helper to end a promise with a single function, regardless of the promise's resolved value or rejection.
+The promise fulfillment value is maintained and the rejection error is propagated as well.
+
+```javascript
+import { end } from 'promtie';
+
+db.getUser(userId)
+// Close connection to db whether or not the promise was successful or not
+.then(end(db.connection.close), end(db.connection.close));
+
+// Or
+db.getUser(userId)
+// Close connection to db whether or not the promise was successful or not
+.then(end(db.connection.close))
+.catch(end(db.connection.close));
 ```
 
 #### retry(fn, options)

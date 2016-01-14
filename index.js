@@ -12,5 +12,6 @@ exports.reduce = require('./lib/reduce');
 exports.values = require('./lib/values');
 
 exports.spread = require('./lib/spread');
-exports.nodeify = require('./lib/nodeify');
 exports.catchIf = require('./lib/catchIf');
+exports.nodeify = require('./lib/nodeify');
+exports.end = require('./lib/end');
