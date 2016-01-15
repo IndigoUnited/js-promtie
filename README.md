@@ -269,23 +269,24 @@ function fetch(cb) {
 }
 ```
 
-#### end(fn) -> Function
-Helper to "end" a promise with a single function, regardless of the promise's resolved value or rejection.
+#### through(fn) -> Function
+
+Excecute `fn` while passing the resolved value or rejection through, regardless of the promise's resolved value or rejection.
 The promise fulfillment value is maintained and the rejection error is propagated as well.
 **Example:**
 
 ```javascript
-import { end } from 'promtie';
+import { through } from 'promtie';
 
 db.getUser(userId)
 // Close connection to db whether or not the promise was successful or not
-.then(end(db.connection.close), end(db.connection.close));
+.then(through(db.connection.close), through(db.connection.close));
 
 // Or
 db.getUser(userId)
 // Close connection to db whether or not the promise was successful or not
-.then(end(db.connection.close))
-.catch(end(db.connection.close));
+.then(through(db.connection.close))
+.catch(through(db.connection.close));
 ```
 
 

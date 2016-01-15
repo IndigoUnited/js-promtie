@@ -1,9 +1,9 @@
-import { end } from '../../';
+import { through } from '../../';
 import test from 'ava';
 
-test('end(fn)', (t) => {
+test('through(fn)', (t) => {
     return Promise.resolve('unicorns')
-    .then(end((value) => {
+    .then(through((value) => {
         t.is(value, 'unicorns');
     }))
     .then((value) => {
@@ -11,10 +11,10 @@ test('end(fn)', (t) => {
     });
 });
 
-test('end(fn): deal with promise failure', (t) => {
+test('through(fn): deal with promise failure', (t) => {
     return t.throws(
         Promise.reject(new Error('unicorn is sad'))
-        .then(null, end((err) => {
+        .then(null, through((err) => {
             t.is(err.message, 'unicorn is sad');
         })),
         'unicorn is sad'

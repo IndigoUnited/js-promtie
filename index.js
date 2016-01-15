@@ -23,4 +23,4 @@ exports.delay = require('./lib/delay');
 // exports.timeout = require('./lib/timeout');
 exports.catchIf = require('./lib/catchIf');
 exports.nodeify = require('./lib/nodeify');
-exports.end = require('./lib/end');
+exports.through = require('./lib/through');
