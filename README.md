@@ -253,8 +253,8 @@ db.getUser(userId)
 
 #### nodeify([fn]) -> Function
 
-Returns a function that calls the callback function with the resulting value, ignoring the error.
-If no callback is provided, the returned function simply returns the value.
+Returns a function that calls the callback function with the resulting value or the error. If the callback throws an error, it will be globally thrown.
+If no callback is provided, the returned function simply returns the value or continues to propagate the error.
 Useful for APIs that still want to support callback style.
 
 **Example:**
@@ -265,7 +265,7 @@ import { nodeify } from 'promtie';
 // Function can be used with callback style or promise style
 function fetch(cb) {
     return Promise.resolve(1)
-    .then(nodeify(cb), cb);
+    .then(nodeify(cb), nodeify(cb));
 }
 ```
 
