@@ -2,20 +2,20 @@
 
  > Neatly dress up your native promises with simple and useful utils.
 
-Unlike `Bluebird` or `Q`, promtie aims to be used with native promises. It it very easy to start a chain of operations or to intersect a set of operations with an each or map iteration.
+Unlike `Bluebird` or `Q`, promtie aims to be used with native promises. It it very easy to start a chain of promises or to intersect a set of promises with an each or map iteration.
 
 You can also use each util separately without requiring the whole library.
 
-This module includes the most common utils needed to work with collections of promises (or values): each, map, filter, reduce; as well as other common patterns when using promises: delay, timeout, retry, spread, catchIf, ...
+This module includes the most common utils needed to work with collections of promises: each, map, filter, reduce; as well as other common patterns when using promises: delay, timeout, retry, spread, catchIf, ...
 
 **Example:**
 ```javascript
 import { each, map } from 'promtie';
 
-// Request all the pages at the same time
-map([1, 2, Promise.resolve(3)], requestPage)
-// and render each one at a time
-.then(each(renderPage));
+// Greet all the unicorns at the same time
+map(['unicorn1', 'unicorn2', Promise.resolve('fancy unicorn')], greetUnicorns)
+// Feed each unicorn one at a time
+.then(each(feedUnicorns));
 ```
 
 ## Installation
@@ -170,7 +170,6 @@ attempt(() => {
     console.error(err.stack);
 });
 ```
-
 
 #### spread(fn) -> Function
 
