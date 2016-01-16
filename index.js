@@ -18,7 +18,7 @@ exports.values = require('./lib/values');
 // Others
 exports.attempt = require('./lib/attempt');
 exports.spread = require('./lib/spread');
-// exports.retry = require('./lib/retry');
+exports.retry = require('./lib/retry');
 exports.delay = require('./lib/delay');
 exports.timeout = require('./lib/timeout');
 exports.catchIf = require('./lib/catchIf');

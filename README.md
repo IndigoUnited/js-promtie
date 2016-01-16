@@ -14,7 +14,7 @@ promtie.map([Promise.resolve('fancy unicorn'), 'fancy unicorn nº 2'], greetUnic
 .then(promtie.each(feedUnicorns));
 ```
 
-You can also use each util separately without requiring the whole promtie. This is the recomended way to use it.
+You can also use each util separately without requiring all the utils. This is the recomended way to use it.
 
 ```javascript
 import { each, map } from 'promtie';
@@ -160,10 +160,6 @@ Promise.resolve({
 .then(values(result => console.log('got value 3:', result.key3))) // 'value3'
 ```
 
-### Promisification
-#### `promisify(fn) -> Function`
-#### `promisifyAll(object) -> Object`
-
 ### Others
 #### `attempt(fn) -> Promise`
 
@@ -222,11 +218,13 @@ Retry a function `n` times.
 **Example:**
 
 ```javascript
-import { retry } from 'promtie'
+import { retry, catchIf } from 'promtie'
 
-retry(3, () => {
-
-})
+// Retry at most three times to connect to db if the connection is timing out.
+retry(3, retryAgain => {
+    return db.connect()
+    .catch(catchIf(ConnectionTimeoutError, retryAgain));
+});
 ```
 
 #### `delay(n, [fn]) -> Function | Promise`
@@ -390,6 +388,10 @@ db.getUser(userId)
 .catch(through(db.connection.close));
 ```
 
+### Promisification
+#### `promisify(fn) -> Function`
+#### `promisifyAll(object) -> Object`
+
 ## Tests
 
 `$ npm test`
@@ -397,7 +399,6 @@ db.getUser(userId)
 ## Contributing
 
 Feel free to propose PRs for bug fixes, adding utils, etc.
-
 
 ## License
 
