@@ -4,9 +4,6 @@
 
 Unlike `Bluebird` or `Q`, promtie aims to be used with native promises. It it very easy to start a chain of promises or to intersect a set of promises with an each or map iteration.
 
-You can also use each util separately without requiring the whole library.
-
-This module includes the most common utils needed to work with collections of promises: each, map, filter, reduce; as well as other common patterns when using promises: delay, timeout, retry, spread, catchIf, ...
 
 **Example:**
 
@@ -18,6 +15,20 @@ map(['unicorn1', 'unicorn2', Promise.resolve('fancy unicorn')], greetUnicorns)
 // Feed each unicorn one at a time
 .then(each(feedUnicorns));
 ```
+
+You can also use each util separately without requiring the whole library.
+
+**Example:**
+
+```javascript
+import { each, map } from 'promtie';
+
+// or using require
+
+var each = require('promtie/lib/each');
+```
+
+This module includes the most common utils needed to work with collections of promises: each, map, filter, reduce; as well as other common patterns when using promises: delay, timeout, retry, spread, catchIf, ...
 
 ## Installation
 
@@ -162,28 +173,44 @@ import { readFileSync } from 'fs';
 import { attempt } from 'promtie';
 
 attempt(() => JSON.parse(readFileSync('unicorn.json').toString()))
-.then(unicorn => {
-    console.log('Unicorn\'s name is:', unicorn.name);
-}, err => { // Catch errors such as ENOENT or SyntaxError (for invalid json)
+.then(unicorn => console.log('Unicorn\'s name is:', unicorn.name), err => {
+    // Catch synchronous errors such as ENOENT or SyntaxError (for invalid json)
     console.error('Failed to read unicorn:', err);
     console.error(err.stack);
 });
 ```
 
-#### `spread(fn) -> Function`
+#### `spread([array], fn, [ctx]) -> Function | Promise`
 
 Spreads array values to the arguments of `fn`.
+You can pass a context object to bind to the function call.
 **Example:**
 
 ```javascript
 import { spread } from 'promtie';
 
 Promise.resolve([fetchData(), fetchMetadata(), 'v0.2.1'])
-.then(spread(function (data, meta, version) {
+.then(spread((data, meta, version) => {
     console.log('got data:', data);
     console.log('meta:', meta);
     console.log('version:', version);
 }));
+```
+
+`spread(array, fn, [ctx]) -> Promise`: Alternatively, if you pass an array as the first argument, `spread` returns a promise.
+**Example:**
+
+```javascript
+import { spread } from 'promtie';
+
+spread([fetchData(), fetchMetadata(), 'v0.2.1'], (data, meta, version) => {
+    console.log('got data:', data);
+    console.log('meta:', meta);
+    console.log('version:', version);
+
+    return data;
+})
+.then(normalizeData);
 ```
 
 #### `retry(fn, options)`
@@ -209,7 +236,7 @@ map(users, user => {
 });
 ```
 
-`delay(n, fn) -> Promise`: Alternatively, pass a `n` delay and function in favor of returning a promise.
+`delay(n, fn) -> Promise`: Alternatively, if you also pass a function, `delay` returns a promise.
 Useful for starting a promise chain with a delay.
 **Example:**
 
@@ -239,7 +266,7 @@ getTopUsers()
     return timeout(10e3, map(users, user => notifyUser(user.id)));
 })
 .catch(catchIf(timeout.isTimeoutError, err => {
-    log.warn(err, 'Notifying users took too long. Moving on...');
+    console.log(err, 'Notifying users took too long. Moving on...');
 }));
 ```
 
@@ -269,12 +296,12 @@ import { catchIf } from 'promtie';
 
 db.getUser(userId)
 .catch(catchIf(isNotFoundError, err => {
-    log.error(err, 'User with id ${userId} does not exist.');
+    console.error(err, 'User with id ${userId} does not exist.');
 
     throw err;
 }))
 .catch(catchIf(isConnectionTimeoutError, err => {
-    log.error(err, 'Service Unavailable. Please try again later.');
+    console.error(err, 'Service Unavailable. Please try again later.');
 
     throw err;
 }));
