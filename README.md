@@ -283,11 +283,11 @@ timeout(10e3, fetchNotifications(userId))
 .catch(catchIf(timeout.TimeoutError, () => throw new Error('Fetching user notifications timed out.')));
 ```
 
-#### `catchIf(predicateFn, fn) -> Function`
+#### `catchIf(predicateFn | object, fn) -> Function`
 
 Returns a function that will handle an error if it passes the predicate function test.
 If the predicate returns false, the error is propagated and `fn` is not called.
-Useful for treating different cases of errors without cluttering the code with switch cases/ifs.
+Useful for treating different types of errors without cluttering the code with switch cases/ifs.
 
 **Example:**
 
@@ -307,6 +307,28 @@ db.getUser(userId)
 }));
 // If the error thrown was not a NotFoundError or a ConnectionTimeoutError
 // the error continues to be thrown.
+```
+
+`catchIf(object, fn) -> Function`: Alternaively, you can pass an object to be matched with error instance.
+**Example:**
+
+```javascript
+import { catchIf } from 'promtie';
+
+function NotFoundError() {}
+NotFoundError.prototype = Object.create(Error.prototype);
+NotFoundError.prototype.constructor = function () {
+    this.message = 'Not found';
+    this.code = 'NOT_FOUND';
+};
+
+db.getUser(userId)
+// If the error is an instance of NotFoundError
+.catch(catchIf(NotFoundError, err => {
+    console.error(err, 'User with id ${userId} does not exist.');
+
+    throw err;
+}));
 ```
 
 #### `nodeify([fn]) -> Function`
@@ -353,7 +375,6 @@ db.getUser(userId)
 .then(through(db.connection.close))
 .catch(through(db.connection.close));
 ```
-
 
 ## Tests
 
