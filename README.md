@@ -2,33 +2,29 @@
 
  > Neatly dress up your native promises with simple but powerful utils.
 
-Unlike `Bluebird` or `Q`, promtie aims to be used with native promises. It it very easy to start a chain of promises or to intersect a set of promises with an each or map iteration.
-
-
-**Example:**
+Unlike `Bluebird` or `Q`, promtie aims to be used with native promises by making it very easy to start a chain of promises or to intersect a set of promises with an each or map iteration.
+`Promtie` is just as powerful as `Bluebird` or `Q`, but instead of forcing the usage of custom Promise instances, with `Promtie` you can use native promises (or polyfills).
 
 ```javascript
-import { each, map } from 'promtie';
+import promtie from 'promtie';
 
 // Greet all the unicorns at the same time
-map(['unicorn1', 'unicorn2', Promise.resolve('fancy unicorn')], greetUnicorns)
+promtie.map([Promise.resolve('fancy unicorn'), 'fancy unicorn nº 2'], greetUnicorns)
 // Feed each unicorn one at a time
-.then(each(feedUnicorns));
+.then(promtie.each(feedUnicorns));
 ```
 
-You can also use each util separately without requiring the whole library.
-
-**Example:**
+You can also use each util separately without requiring the whole promtie. This is the recomended way to use it.
 
 ```javascript
 import { each, map } from 'promtie';
 
-// or using require
+// using require
 
 var each = require('promtie/lib/each');
 ```
 
-This module includes the most common utils needed to work with collections of promises: each, map, filter, reduce; as well as other common patterns when using promises: delay, timeout, retry, spread, catchIf, ...
+This module includes the most common utils needed to work with collections of promises: `each`, `map`, `filter`, `reduce`, ...; as well as other common patterns when using promises: `delay`, `timeout`, `retry`, `spread`, `catchIf`, ...
 
 ## Installation
 
@@ -50,7 +46,9 @@ each([1, 2, 3], (value, index, length) => requestPage(value))
 .then(pages => console.log('pages', pages) );
 ```
 
-`each(fn) -> Function`: The array can be omitted in favor of returning an function that takes the array instead. **Example:**
+`each(fn) -> Function`: If you omit the array, `each` returns a function that takes the array instead as an argument.
+**Example:**
+
 ```javascript
 import { each } from 'promtie';
 
@@ -72,7 +70,8 @@ map([1, 2, 3], (value, index, length) => requestPage(value), { concurrency: 2 })
 .then(pages => console.log('pages', pages) );
 ```
 
-`map(fn, options) -> Function`: The array can be omitted in favor of returning an function that takes the array instead. **Example:**
+`map(fn, options) -> Function`: If you omit the array, `map` returns a function that takes the array instead as an argument.
+**Example:**
 
 ```javascript
 import { map } from 'promtie';
@@ -95,7 +94,8 @@ filter([1, 2, 3], (value, index, length) => isOdd(value), { concurrency: 2 })
 .then(pages => console.log('odd pages', pages));
 ```
 
-`filter(fn, options) -> Function`: The array can be omitted in favor of returning an function that takes the array instead. **Example:**
+`filter(fn, options) -> Function`: If you omit the array, `filter` returns a function that takes the array instead as an argument.
+**Example:**
 
 ```javascript
 import { filter } from 'promtie';
@@ -117,7 +117,8 @@ reduce([1, 2, 3], (acc, value, index, length) => acc + value, 0)
 .then(total => console.log('total sum:', total));
 ```
 
-`reduce(fn, [initialValue]) -> Function`: The array can be omitted in favor of returning an function that takes the array instead. **Example:**
+`reduce(fn, [initialValue]) -> Function`: If you omit the array, `reduce` returns a function that takes the array instead as an argument.
+**Example:**
 
 ```javascript
 import { reduce } from 'promtie';
@@ -127,7 +128,7 @@ Promise.resolve([1, 2, 3])
 .then(total => console.log('total sum:', total));
 ```
 
-#### `values(object|fn) -> Promise | Function`
+#### `values(object | fn) -> Promise | Function`
 
 Resolve the values of an object, whether they are promises or not, fulfilled.
 **Example:**
@@ -144,7 +145,8 @@ values({
 .then(result => console.log('got value 3:', result.key3)); // 'value3'
 ```
 
-`values(fn) -> Function`: Alternatively, pass a function that will receive the resolved object values in favor of returning a function that takes the object instead. The handle function return value will be the fulfillment value. **Example:**
+`values(fn) -> Function`: If you omit the object, `values` returns a function that takes the object instead as an argument.
+**Example:**
 
 ```javascript
 import { values } from 'promtie';
@@ -183,7 +185,7 @@ attempt(() => JSON.parse(readFileSync('unicorn.json').toString()))
 #### `spread([array], fn, [ctx]) -> Function | Promise`
 
 Spreads array values to the arguments of `fn`.
-You can pass a context object to bind to the function call.
+You can pass a context object to bind it to the function call.
 **Example:**
 
 ```javascript
@@ -197,7 +199,7 @@ Promise.resolve([fetchData(), fetchMetadata(), 'v0.2.1'])
 }));
 ```
 
-`spread(array, fn, [ctx]) -> Promise`: Alternatively, if you pass an array as the first argument, `spread` returns a promise.
+`spread(array, fn, [ctx]) -> Promise`: If you omit the array, `spread` returns a function that takes the array instead as an argument.
 **Example:**
 
 ```javascript
@@ -213,7 +215,19 @@ spread([fetchData(), fetchMetadata(), 'v0.2.1'], (data, meta, version) => {
 .then(normalizeData);
 ```
 
-#### `retry(fn, options)`
+#### `retry(n, fn) -> Promise`
+
+Retry a function `n` times.
+
+**Example:**
+
+```javascript
+import { retry } from 'promtie'
+
+retry(3, () => {
+
+})
+```
 
 #### `delay(n, [fn]) -> Function | Promise`
 
@@ -333,7 +347,7 @@ db.getUser(userId)
 
 #### `nodeify([fn]) -> Function`
 
-Returns a function that calls the callback function with the resulting value or the error. If the callback throws an error, it will be globally thrown.
+Returns a function that calls the callback function with the resulting value or the error. If the callback throws an error, it will be thrown to the global context.
 If no callback is provided, the returned function simply returns the value or continues to propagate the error.
 Useful for APIs that still want to support callback style.
 
@@ -359,19 +373,19 @@ function fetch(cb) {
 #### `through(fn) -> Function`
 
 Excecute `fn` while passing the resolved value or rejection through, regardless of the promise's resolved value or rejection.
-The promise fulfillment value is maintained and the rejection error is propagated as well.
+The promise fulfillment value is passed through and the rejection error as well.
 **Example:**
 
 ```javascript
 import { through } from 'promtie';
 
 db.getUser(userId)
-// Close connection to db whether or not the promise was successful or not
+// Close connection to db whether the promise was fulfilled or not
 .then(through(db.connection.close), through(db.connection.close));
 
 // Or
 db.getUser(userId)
-// Close connection to db whether or not the promise was successful or not
+// Close connection to db whether the promise was fulfilled or not
 .then(through(db.connection.close))
 .catch(through(db.connection.close));
 ```
@@ -379,6 +393,10 @@ db.getUser(userId)
 ## Tests
 
 `$ npm test`
+
+## Contributing
+
+Feel free to propose PRs for bug fixes, adding utils, etc.
 
 
 ## License
