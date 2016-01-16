@@ -1,6 +1,6 @@
 # Promtie
 
- > Neatly dress up your native promises with simple and useful utils.
+ > Neatly dress up your native promises with simple but powerful utils.
 
 Unlike `Bluebird` or `Q`, promtie aims to be used with native promises. It it very easy to start a chain of promises or to intersect a set of promises with an each or map iteration.
 

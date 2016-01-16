@@ -1,7 +1,7 @@
 {
   "name": "promtie",
   "version": "0.1.0",
-  "description": "Neatly dress up your native promises with simple and useful utils.",
+  "description": "Neatly dress up your native promises with simple but powerful utils.",
   "main": "index.js",
   "scripts": {
     "test": "ava --tap | tap-nyan"
@@ -14,8 +14,13 @@
     "url": "git://github.com/IndigoUnited/promtie.git"
   },
   "keywords": [
+    "util",
     "utils",
-    "promise"
+    "collections",
+    "array",
+    "promise",
+    "promises",
+    "native"
   ],
   "author": "IndigoUnited <hello@indigounited.com> (http://indigounited.com)",
   "license": "MIT",
