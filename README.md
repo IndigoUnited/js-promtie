@@ -9,6 +9,7 @@ You can also use each util separately without requiring the whole library.
 This module includes the most common utils needed to work with collections of promises: each, map, filter, reduce; as well as other common patterns when using promises: delay, timeout, retry, spread, catchIf, ...
 
 **Example:**
+
 ```javascript
 import { each, map } from 'promtie';
 
@@ -22,11 +23,11 @@ map(['unicorn1', 'unicorn2', Promise.resolve('fancy unicorn')], greetUnicorns)
 
 `$ npm install --save promtie`
 
-
 ## Usage
 
 ### Collections
-#### each([array], fn) -> Promise | Function
+
+#### `each([array], fn) -> Promise | Function`
 
 Iterates over the `array` and calls `fn` on each value (promise that resolves to a value) in series.
 
@@ -47,7 +48,7 @@ Promise.resolve([1, 2, 3])
 .then(pages => console.log('pages', pages));
 ```
 
-#### map([array], fn, options) -> Promise | Function
+#### `map([array], fn, options) -> Promise | Function`
 
 Iterates over the `array` and calls `fn` on each value (promise that resolves to a value) in parallel.
 Concurrency can be controlled with `options.concurrency`.
@@ -70,7 +71,7 @@ Promise.resolve([1, 2, 3])
 .then(pages => console.log('pages', pages));
 ```
 
-#### filter([array], fn, options) -> Promise | Function
+#### `filter([array], fn, options) -> Promise | Function`
 
 Iterates over the `array` and filters out the array values if they do not pass the function test.
 Concurrency can be controlled with `options.concurrency`.
@@ -93,7 +94,7 @@ Promise.resolve([1, 2, 3])
 .then(pages => console.log('odd pages', pages) );
 ```
 
-#### reduce([array], fn, [initialValue]) -> Promise | Function
+#### `reduce([array], fn, [initialValue]) -> Promise | Function`
 
 Iterates over the array and calls fn on each value and accumulates the result to reduce it to a single value.
 
@@ -115,7 +116,7 @@ Promise.resolve([1, 2, 3])
 .then(total => console.log('total sum:', total));
 ```
 
-#### values(object|fn) -> Promise | Function
+#### `values(object|fn) -> Promise | Function`
 
 Resolve the values of an object, whether they are promises or not, fulfilled.
 **Example:**
@@ -147,11 +148,11 @@ Promise.resolve({
 ```
 
 ### Promisification
-#### promisify(fn) -> Function
-#### promisifyAll(object) -> Object
+#### `promisify(fn) -> Function`
+#### `promisifyAll(object) -> Object`
 
 ### Others
-#### attempt(fn) -> Promise
+#### `attempt(fn) -> Promise`
 
 Start a chain of promises while mapping synchronous exceptions to promise rejections.
 **Example:**
@@ -160,18 +161,16 @@ Start a chain of promises while mapping synchronous exceptions to promise reject
 import { readFileSync } from 'fs';
 import { attempt } from 'promtie';
 
-attempt(() => {
-    return JSON.parse(readFileSync('unicorn.json').toString());
-})
+attempt(() => JSON.parse(readFileSync('unicorn.json').toString()))
 .then(unicorn => {
     console.log('Unicorn\'s name is:', unicorn.name);
-}, err => { // Catch errors as ENOENT or SyntaxError (for invalid json)
+}, err => { // Catch errors such as ENOENT or SyntaxError (for invalid json)
     console.error('Failed to read unicorn:', err);
     console.error(err.stack);
 });
 ```
 
-#### spread(fn) -> Function
+#### `spread(fn) -> Function`
 
 Spreads array values to the arguments of `fn`.
 **Example:**
@@ -187,8 +186,9 @@ Promise.resolve([fetchData(), fetchMetadata(), 'v0.2.1'])
 }));
 ```
 
-#### retry(fn, options)
-#### delay(n, [fn]) -> Promise | Function
+#### `retry(fn, options)`
+
+#### `delay(n, [fn]) -> Function | Promise`
 
 Delays the execution of the next promise by `n` milliseconds.
 
@@ -223,12 +223,43 @@ delay(200, server.listen)
 });
 ```
 
-#### timeout(n)
+#### `timeout(n, fn | promise) -> Promise`
 
-#### catchIf(predicateFn, fn) -> Function
+Do not wait more than `n` milliseconds for the operation to finish.
+If Timeout is reached, the promise is rejected with `timeout.TimeoutError`.
+
+**Example:**
+
+```javascript
+import { timeout, map, catchIf } from 'promtie';
+
+getTopUsers()
+.then(users => {
+    // Wait no more than 10 seconds. Notifying users is not critical.
+    return timeout(10e3, map(users, user => notifyUser(user.id)));
+})
+.catch(catchIf(timeout.isTimeoutError, err => {
+    log.warn(err, 'Notifying users took too long. Moving on...');
+}));
+```
+
+#### `timeout.TimeoutError`
+
+TimeoutError error object.
+**Example:**
+
+```javascript
+import { timeout, catchIf } from 'promtie';
+
+timeout(10e3, fetchNotifications(userId))
+// If this error is a timeout error, translate error message
+.catch(catchIf(timeout.TimeoutError, () => throw new Error('Fetching user notifications timed out.')));
+```
+
+#### `catchIf(predicateFn, fn) -> Function`
 
 Returns a function that will handle an error if it passes the predicate function test.
-If the predicate returns false, the error is propagated.
+If the predicate returns false, the error is propagated and `fn` is not called.
 Useful for treating different cases of errors without cluttering the code with switch cases/ifs.
 
 **Example:**
@@ -251,7 +282,7 @@ db.getUser(userId)
 // the error continues to be thrown.
 ```
 
-#### nodeify([fn]) -> Function
+#### `nodeify([fn]) -> Function`
 
 Returns a function that calls the callback function with the resulting value or the error. If the callback throws an error, it will be globally thrown.
 If no callback is provided, the returned function simply returns the value or continues to propagate the error.
@@ -267,9 +298,16 @@ function fetch(cb) {
     return Promise.resolve(1)
     .then(nodeify(cb), nodeify(cb));
 }
+
+// Or
+function fetch(cb) {
+    return Promise.resolve(1)
+    .then(nodeify(cb))
+    .catch(nodeify(cb));
+}
 ```
 
-#### through(fn) -> Function
+#### `through(fn) -> Function`
 
 Excecute `fn` while passing the resolved value or rejection through, regardless of the promise's resolved value or rejection.
 The promise fulfillment value is maintained and the rejection error is propagated as well.

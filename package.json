@@ -24,7 +24,7 @@
   },
   "devDependencies": {
     "@carsy/eslint-config": "git+ssh://git@github.com/carsy/eslint-config.git",
-    "ava": "^0.9.1",
+    "ava": "^0.10.0",
     "tap-nyan": "0.0.2"
   }
 }
