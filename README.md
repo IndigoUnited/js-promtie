@@ -1,4 +1,4 @@
-# Promtie
+# Promtie 👔
 
  > Neatly dress up your native promises with simple but powerful utils.
 
@@ -398,21 +398,14 @@ Promisifies a callback style function.
 ```javascript
 import { promisify } from 'promtie';
 
-function feedUnicorn(unicorn, rainbow, callback) {
-    unicorn.feed(rainbow, (err, result) => {
-        if (err) {
-            console.error('UnicornNotFedError:', err);
-            return callback(err);
-        }
-
-        console.log('Unicorn ${unicorn.name} ate the whole rainbow!');
-        return callback(null, result);
-    });
-}
-
 const feedUnicornAsync = promisify(feedUnicorn);
 
-feedUnicornAsync(unicorn)
+function feedUnicorn(unicorn, rainbow, callback) {
+    console.log('${unicorn} eats ${rainbow}');
+    callback(null, '~burp');
+}
+
+feedUnicornAsync(unicorn, 'morning rainbow')
 .then(result => console.log('Unicorn fed:', result))
 .catch(err => console.error('Failed to feed unicorn:', err));
 ```
