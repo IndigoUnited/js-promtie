@@ -1,4 +1,5 @@
 import { catchIf } from '../../';
+import Promise from '../util/promise';
 import test from 'ava';
 
 test('catchIf(predicateFn, fn): on predicate returning true', (t) => {

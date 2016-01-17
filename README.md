@@ -412,6 +412,8 @@ feedUnicornAsync(unicorn, 'morning rainbow')
 
 #### `promisifyAll(object) -> Object`
 
+Promisifies all the functions of an object, returning a new object.
+
 ## Tests
 
 `$ npm test`

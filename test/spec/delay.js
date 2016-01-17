@@ -1,4 +1,5 @@
 import { delay } from '../../';
+import Promise from '../util/promise';
 import test from 'ava';
 
 test('delay(n, fn)', (t) => {

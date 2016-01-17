@@ -2,7 +2,7 @@
 
 'use strict';
 
-// TODO: allow each util to be requirable as require('promtie/each')
+// TODO: allow each util to be requirable with require('promtie/each')
 
 // Collections
 exports.each = require('./lib/each');

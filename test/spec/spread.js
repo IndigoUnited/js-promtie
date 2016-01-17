@@ -1,4 +1,5 @@
 import { spread } from '../../';
+import Promise from '../util/promise';
 import test from 'ava';
 
 test('spread(fn)', (t) => {

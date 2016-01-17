@@ -1,4 +1,5 @@
 import { through } from '../../';
+import Promise from '../util/promise';
 import test from 'ava';
 
 test('through(fn)', (t) => {

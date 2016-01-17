@@ -1,4 +1,5 @@
 import { each } from '../../';
+import Promise from '../util/promise';
 import test from 'ava';
 
 test('each(fn)', (t) => {

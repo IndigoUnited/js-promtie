@@ -1,4 +1,5 @@
 import { values } from '../../';
+import Promise from '../util/promise';
 import test from 'ava';
 
 test('values(object)', (t) => {

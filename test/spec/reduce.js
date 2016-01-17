@@ -1,4 +1,5 @@
 import { reduce } from '../../';
+import Promise from '../util/promise';
 import test from 'ava';
 
 test('reduce(fn, initialValue)', (t) => {

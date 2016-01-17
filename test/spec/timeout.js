@@ -1,4 +1,5 @@
 import { timeout } from '../../';
+import Promise from '../util/promise';
 import test from 'ava';
 
 test('timeout(n, promise)', (t) => {
