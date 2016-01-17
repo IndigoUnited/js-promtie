@@ -48,3 +48,19 @@ test('filter(arr, fn): filter function returns promise', (t) => {
         t.same(arr, input.slice(2, input.length));
     });
 });
+
+test('filter(arr, fn, options): limit concurrency', (t) => {
+    const start = Date.now();
+
+    return filter([Promise.resolve(1), 2, 3, 4], () => {
+        return new Promise((resolve) => {
+            setTimeout(
+                () => resolve((Date.now() - start) >= 500),
+                250
+            ); // First 2 are not delayed.
+        });
+    }, { concurrency: 2 })
+    .then((result) => {
+        t.same(result, [3, 4]);
+    });
+});

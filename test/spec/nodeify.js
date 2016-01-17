@@ -58,7 +58,7 @@ test.skip.cb('nodeify(fn): deal with fn throwing when called with success', (t) 
     //     t.end();
     // });
 
-    // TODO: Propose this method
+    // TODO: Propose this method to AVA
     t.throwsUncaughtException('Failed promise');
 
     Promise.reject(new Error('Failed promise'))
