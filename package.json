@@ -4,7 +4,7 @@
   "description": "Neatly dress up your native promises with simple but powerful utils.",
   "main": "index.js",
   "scripts": {
-    "test": "ava --tap | tap-nyan"
+    "test": "eslint **/*.js && ava --tap | tap-nyan"
   },
   "bugs": {
     "url": "https://github.com/IndigoUnited/promtie/issues/"
