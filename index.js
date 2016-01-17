@@ -12,7 +12,7 @@ exports.reduce = require('./lib/reduce');
 exports.values = require('./lib/values');
 
 // Promisification
-// exports.promisify = require('./lib/promisify');
+exports.promisify = require('./lib/promisify');
 // exports.promisifyAll = require('./lib/promisifyAll');
 
 // Others

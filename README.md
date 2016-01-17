@@ -372,6 +372,7 @@ function fetch(cb) {
 
 Excecute `fn` while passing the resolved value or rejection through, regardless of the promise's resolved value or rejection.
 The promise fulfillment value is passed through and the rejection error as well.
+This is similar to the try/catch finally, meaning, regardless of the promise's end result, we execute this code.
 **Example:**
 
 ```javascript
@@ -390,6 +391,32 @@ db.getUser(userId)
 
 ### Promisification
 #### `promisify(fn) -> Function`
+
+Promisifies a callback style function.
+**Example:**
+
+```javascript
+import { promisify } from 'promtie';
+
+function feedUnicorn(unicorn, rainbow, callback) {
+    unicorn.feed(rainbow, (err, result) => {
+        if (err) {
+            console.error('UnicornNotFedError:', err);
+            return callback(err);
+        }
+
+        console.log('Unicorn ${unicorn.name} ate the whole rainbow!');
+        return callback(null, result);
+    });
+}
+
+const feedUnicornAsync = promisify(feedUnicorn);
+
+feedUnicornAsync(unicorn)
+.then(result => console.log('Unicorn fed:', result))
+.catch(err => console.error('Failed to feed unicorn:', err));
+```
+
 #### `promisifyAll(object) -> Object`
 
 ## Tests
