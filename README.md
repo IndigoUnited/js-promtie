@@ -343,6 +343,27 @@ db.getUser(userId)
 }));
 ```
 
+#### `through(fn) -> Function`
+
+Excecute `fn` while passing the resolved value or rejection through, regardless of the promise's resolved value or rejection.
+The promise fulfillment value is passed through and the rejection error as well.
+This is similar to the try/catch finally, meaning, regardless of the promise's end result, we execute this code.
+**Example:**
+
+```javascript
+import { through } from 'promtie';
+
+db.getUser(userId)
+// Close connection to db whether the promise was fulfilled or not
+.then(through(db.connection.close), through(db.connection.close));
+
+// Or
+db.getUser(userId)
+// Close connection to db whether the promise was fulfilled or not
+.then(through(db.connection.close))
+.catch(through(db.connection.close));
+```
+
 #### `nodeify([fn]) -> Function`
 
 Returns a function that calls the callback function with the resulting value or the error. If the callback throws an error, it will be thrown to the global context.
@@ -368,27 +389,6 @@ function fetch(cb) {
 }
 ```
 
-#### `through(fn) -> Function`
-
-Excecute `fn` while passing the resolved value or rejection through, regardless of the promise's resolved value or rejection.
-The promise fulfillment value is passed through and the rejection error as well.
-This is similar to the try/catch finally, meaning, regardless of the promise's end result, we execute this code.
-**Example:**
-
-```javascript
-import { through } from 'promtie';
-
-db.getUser(userId)
-// Close connection to db whether the promise was fulfilled or not
-.then(through(db.connection.close), through(db.connection.close));
-
-// Or
-db.getUser(userId)
-// Close connection to db whether the promise was fulfilled or not
-.then(through(db.connection.close))
-.catch(through(db.connection.close));
-```
-
 ### Promisification
 #### `promisify(fn) -> Function`
 
@@ -410,9 +410,24 @@ feedUnicornAsync(unicorn, 'morning rainbow')
 .catch(err => console.error('Failed to feed unicorn:', err));
 ```
 
-#### `promisifyAll(object) -> Object`
+#### `promisifyAll(object, [targetObject]) -> Object`
 
-Promisifies all the functions of an object, returning a new object.
+Promisifies all the enumerable own functions (and prototype functions) of an object, returning a new object, or assigning methods to the `targetObject`.
+Methods that also have methods are recursevely promisified.
+**Example:**
+
+```javascript
+import { promisifyAll } from 'promtie';
+
+const jeffy = promisifyAll({
+    name: 'jeffy',
+    run(callback) {
+        callback(null, `${this.name} started to run`);
+    },
+});
+
+jeffy.run().then(() => console.log(`${jeffy.name} stopped running`));
+```
 
 ## Tests
 
