@@ -79,3 +79,18 @@ test('retry(n, fn): should not retry when fn returns a rejected promise', (t) =>
         t.is(err.message, 'Unicorns FTW');
     });
 });
+
+test('retry(n, fn, options): delay between retries', (t) => {
+    const start = Date.now();
+    let countdown = 3;
+
+    return retry(3, (retryAgain) => {
+        countdown--;
+        return retryAgain(new Error('Unicorns FTW'));
+    }, { delay: 50 })
+    .then(t.fail, (err) => {
+        t.is(countdown, 0);
+        t.is(err.message, 'Unicorns FTW');
+        t.true((Date.now() - start) >= 100);
+    });
+});

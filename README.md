@@ -211,9 +211,9 @@ spread([fetchData(), fetchMetadata(), 'v0.2.1'], (data, meta, version) => {
 .then(normalizeData);
 ```
 
-#### `retry(n, fn) -> Promise`
+#### `retry(n, fn, [options]) -> Promise`
 
-Retry a function `n` times.
+Retry a function `n` times. Delay in between retries can be configured with `options.delay`.
 
 **Example:**
 
@@ -224,7 +224,7 @@ import { retry, catchIf } from 'promtie'
 retry(3, retryAgain => {
     return db.connect()
     .catch(catchIf(ConnectionTimeoutError, retryAgain));
-});
+}, { delay: 50 });
 ```
 
 #### `delay(n, [fn]) -> Function | Promise`
