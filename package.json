@@ -9,11 +9,11 @@
     "coverage": "nyc ava test/spec && nyc report --reporter=text-lcov | coveralls"
   },
   "bugs": {
-    "url": "https://github.com/IndigoUnited/promtie/issues/"
+    "url": "https://github.com/IndigoUnited/js-promtie/issues/"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/IndigoUnited/promtie.git"
+    "url": "git://github.com/IndigoUnited/js-promtie.git"
   },
   "keywords": [
     "utils",
