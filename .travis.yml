@@ -3,6 +3,6 @@ node_js:
   - "0.12"
   - "4"
   - "5"
-script: "ava test/spec"
+script: "eslint **/*.js && ava test/spec"
 after_success:
-    - "nyc ava test/spec && nyc report --reporter=text-lcov | ./node_modules/.bin/coveralls"
+    - "nyc report --reporter=text-lcov | ./node_modules/.bin/coveralls"
