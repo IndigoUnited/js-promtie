@@ -30,7 +30,6 @@
     "node": ">=0.12"
   },
   "devDependencies": {
-    "@carsy/eslint-config": "git+ssh://git@github.com/carsy/eslint-config.git",
     "ava": "^0.10.0",
     "coveralls": "^2.11.6",
     "nyc": "^5.3.0",
