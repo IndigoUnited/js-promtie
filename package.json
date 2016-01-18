@@ -4,7 +4,9 @@
   "description": "Neatly dress up your native promises with simple but powerful utils.",
   "main": "index.js",
   "scripts": {
-    "test": "eslint **/*.js && ava test/spec --tap | tap-nyan"
+    "test": "eslint **/*.js && ava test/spec --tap | tap-nyan",
+    "test-cov": "nyc ava test/spec --reporter=lcov && echo coverage: coverage/lcov-report/index.html",
+    "coverage": "nyc ava test/spec && nyc report --reporter=text-lcov | coveralls"
   },
   "bugs": {
     "url": "https://github.com/IndigoUnited/promtie/issues/"
@@ -30,6 +32,8 @@
   "devDependencies": {
     "@carsy/eslint-config": "git+ssh://git@github.com/carsy/eslint-config.git",
     "ava": "^0.10.0",
+    "coveralls": "^2.11.6",
+    "nyc": "^5.3.0",
     "tap-nyan": "0.0.2"
   }
 }
