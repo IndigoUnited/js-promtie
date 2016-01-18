@@ -3,3 +3,5 @@ node_js:
   - "0.12"
   - "4"
   - "5"
+after_success:
+    - nyc ava test/spec && nyc report --reporter=text-lcov | ./node_modules/.bin/coveralls
