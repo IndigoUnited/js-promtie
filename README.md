@@ -1,6 +1,9 @@
 # Promtie 👔
 
- > Neatly dress up your native promises with simple but powerful utils.
+> Neatly dress up your native promises with simple but powerful utils.
+
+[![Build Status](https://travis-ci.org/IndigoUnited/js-promtie.svg?branch=master)](https://travis-ci.org/IndigoUnited/js-promtie)
+
 
 Unlike `Bluebird` or `Q`, promtie aims to be used with native promises by making it very easy to start a chain of promises or to intersect a set of promises with an each or map iteration.
 `Promtie` is just as powerful as `Bluebird` or `Q`, but instead of forcing the usage of custom Promise instances, with `Promtie` you can use native promises.
