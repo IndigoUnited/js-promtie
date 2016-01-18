@@ -34,14 +34,27 @@ test.cb('nodeify(fn): deal with promise failure', (t) => {
     });
 });
 
-test.skip.cb('nodeify(fn): deal with fn throwing when called on failure', (t) => {
-    // process.once('uncaughtException', (err) => {
-    //     t.is(err.message, 'Failed promise');
-    //     t.end();
-    // });
+// TODO: Propose this method to AVA
+function throwsUncaughtException(fn) {
+    const listeners = process.listeners('uncaughtException');
+    const avaListener = listeners[listeners.length - 1];
 
-    // TODO: Propose this method to AVA
-    t.throwsUncaughtException('Failed promise');
+    // Remove AVA listener & track uncaught exception
+    process.removeListener('uncaughtException', avaListener);
+    process.once('uncaughtException', (err) => {
+        // Restore listeners exactly how they were, including order
+        process.removeAllListeners('uncaughtException');
+        listeners.forEach((listener) => process.on('uncaughtException', listener));
+
+        fn(err);
+    });
+}
+
+test.cb('nodeify(fn): deal with fn throwing when called on failure', (t) => {
+    throwsUncaughtException((err) => {
+        t.is(err.message, 'Failed promise');
+        t.end();
+    });
 
     Promise.resolve('unicorn')
     .then(nodeify((err, value) => {
@@ -52,14 +65,11 @@ test.skip.cb('nodeify(fn): deal with fn throwing when called on failure', (t) =>
     }), null);
 });
 
-test.skip.cb('nodeify(fn): deal with fn throwing when called with success', (t) => {
-    // process.once('uncaughtException', (err) => {
-    //     t.is(err.message, 'Failed promise');
-    //     t.end();
-    // });
-
-    // TODO: Propose this method to AVA
-    t.throwsUncaughtException('Failed promise');
+test.cb('nodeify(fn): deal with fn throwing when called with success', (t) => {
+    throwsUncaughtException((err) => {
+        t.is(err.message, 'Failed promise');
+        t.end();
+    });
 
     Promise.reject(new Error('Failed promise'))
     .then(null, nodeify((err, value) => {
