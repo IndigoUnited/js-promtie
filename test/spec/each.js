@@ -49,29 +49,15 @@ test('each(arr, fn): iterator function returns promise', (t) => {
     });
 });
 
-test('each(fn): deal with promise failure', (t) => {
-    const input = [1, 2, 3, 4];
-
-    return t.throws(
-        Promise.resolve([Promise.resolve(1), 2, Promise.reject(new Error('Failed to fetch third value')), 4])
-        .then(each((n, i, length) => {
-            t.is(n, input[i]);
-            t.is(length, input.length);
-
-            return n * 10;
-        })
-    ), 'Failed to fetch third value');
+test('each(fn): fn throws', (t) => {
+    return Promise.resolve([Promise.resolve(1), 2, 3, 4])
+    .then(each(() => { throw new Error('Failed'); }))
+    .then(t.fail, (err) => t.is(err.message, 'Failed'));
 });
 
 test('each(arr, fn): deal with promise failure', (t) => {
-    const input = [1, 2, 3, 4];
-
-    return t.throws(each([Promise.resolve(1), 2, Promise.reject(new Error('Failed to fetch third value')), 4],
-        (n, i, length) => {
-            t.is(n, input[i]);
-            t.is(length, input.length);
-
-            return n * 10;
-        }
-    ), 'Failed to fetch third value');
+    return each([Promise.resolve(1), 2, 3, 4], () => {
+        return Promise.reject(new Error('Failure'));
+    })
+    .then(t.fail, (err) => t.is(err.message, 'Failure'));
 });
