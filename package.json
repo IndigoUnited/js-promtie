@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "eslint **/*.js && ava test/spec --tap | tap-nyan",
-    "test-cov": "nyc ava test/spec --reporter=lcov && echo coverage: coverage/lcov-report/index.html",
+    "test-cov": "nyc ava test/spec --reporter=lcov && echo coverage report: coverage/lcov-report/index.html",
     "coverage": "nyc ava test/spec && nyc report --reporter=text-lcov | coveralls"
   },
   "bugs": {
@@ -16,9 +16,10 @@
     "url": "git://github.com/IndigoUnited/promtie.git"
   },
   "keywords": [
-    "util",
     "utils",
+    "helpers",
     "collections",
+    "object",
     "array",
     "promise",
     "promises",
