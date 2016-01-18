@@ -24,18 +24,20 @@ test('promisifyAll(object): object with own method', (t) => {
 });
 
 test('promisifyAll(object): object with prototype method', (t) => {
-    const jeffy = promisifyAll(new Unicorn('jeffy'));
+    let jeffy;
 
     function Unicorn(name) {
         this.name = name;
-
-        this.run = function (callback) {
-            callback(null, `${this.name} started to run`);
-        };
-        this.feed = function (rainbow, callback) {
-            callback(new Error(`UnicornNotHungry: ${this.name} is not hungry ATM.`));
-        };
     }
+
+    Unicorn.prototype.run = function (callback) {
+        callback(null, `${this.name} started to run`);
+    };
+    Unicorn.prototype.feed = function (rainbow, callback) {
+        callback(new Error(`UnicornNotHungry: ${this.name} is not hungry ATM.`));
+    };
+
+    jeffy = promisifyAll(new Unicorn('jeffy'));
 
     t.true(jeffy.run() instanceof Promise);
 
@@ -53,9 +55,6 @@ test('promisifyAll(object): object with own method that also contains methods', 
         run(callback) {
             callback(null, `${this.name} started to run`);
         },
-        feed(rainbow, callback) {
-            callback(new Error(`UnicornNotHungry: ${this.name} is not hungry ATM.`));
-        },
     };
 
     unicorn.run.slowly = function (callback) {
@@ -69,18 +68,17 @@ test('promisifyAll(object): object with own method that also contains methods', 
 });
 
 test('promisifyAll(object): object with prototype method that also contains methods', (t) => {
-    let jeffy = new Unicorn('jeffy');
+    let jeffy;
 
     function Unicorn(name) {
         this.name = name;
-
-        this.run = function (callback) {
-            callback(null, `${this.name} started to run`);
-        };
-        this.feed = function (rainbow, callback) {
-            callback(new Error(`UnicornNotHungry: ${this.name} is not hungry ATM.`));
-        };
     }
+
+    Unicorn.prototype.run = function (callback) {
+        callback(null, `${this.name} started to run`);
+    };
+
+    jeffy = promisifyAll(new Unicorn('jeffy'));
 
     jeffy.run.slowly = function (callback) {
         callback(null, 'Running slowly');

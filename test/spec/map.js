@@ -49,6 +49,15 @@ test('map(arr, fn): mapper function returns promise', (t) => {
     });
 });
 
+test('map(arr, fn): mapper function throws', (t) => {
+    return t.throws(
+        map([Promise.resolve(1), 2, Promise.resolve(3), 4], () => {
+            throw new Error('Mapper function failed');
+        }),
+        'Mapper function failed'
+    );
+});
+
 test('map(arr, fn): deal with promise failure', (t) => {
     const expected = [1, 2, 3, 4];
 

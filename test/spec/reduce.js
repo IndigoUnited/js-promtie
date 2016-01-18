@@ -42,7 +42,21 @@ test('reduce(arr, fn, initialValue)', (t) => {
     .then((result) => t.same(result, 10));
 });
 
-test('reduce(arr, fn)', (t) => {
+test('reduce(arr, fn, initialValue): initialValue is a promise', (t) => {
+    const input = [1, 2, 3, 4];
+
+    return reduce([Promise.resolve(1), 2, Promise.resolve(3), 4],
+        (acc, n, i, length) => {
+            t.is(n, input[i]);
+            t.is(length, input.length);
+
+            return acc + n;
+        }, Promise.resolve(0)
+    )
+    .then((result) => t.same(result, 10));
+});
+
+test('reduce(arr, fn): fn returns a value', (t) => {
     const input = [1, 2, 3, 4];
 
     return reduce([Promise.resolve(1), 2, Promise.resolve(3), 4],

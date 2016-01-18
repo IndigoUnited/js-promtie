@@ -406,7 +406,7 @@ feedUnicornAsync(unicorn, 'morning rainbow')
 ### promisifyAll
 
 `promisifyAll(object, [targetObject]) -> Object`:
-Promisifies all the enumerable own functions (and prototype functions) of an object, returning a new object, or assigning methods to the `targetObject`.
+Promisifies all the enumerable own functions of an object, returning a new object, or assigning methods to the `targetObject`.
 Methods that also have methods are recursevely promisified. **Example:**
 
 ```javascript

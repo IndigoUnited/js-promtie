@@ -8,24 +8,26 @@ test('timeout(n, promise)', (t) => {
 });
 
 test('timeout(n, promise): throws TimeoutError when promise times out', (t) => {
-    return t.throws(
-        timeout(10, new Promise((resolve) => setTimeout(resolve, 100))),
-        'TimeoutError: Operation timed out.'
-    );
+    return timeout(10, new Promise((resolve) => setTimeout(resolve, 100)))
+    .then(t.fail, (err) => {
+        t.is(err.message, 'TimeoutError: Operation timed out');
+        t.true(err instanceof timeout.TimeoutError);
+    });
 });
 
-test('timeout(n, function)', (t) => {
+test('timeout(n, fn): fn returns a promise', (t) => {
     return timeout(100, () => Promise.resolve())
     .then(t.pass);
 });
 
-test('timeout(n, function): throws TimeoutError when promise times out', (t) => {
-    return t.throws(
-        timeout(10, () => {
-            return new Promise((resolve) => {
-                setTimeout(resolve, 100);
-            });
-        }),
-        'TimeoutError: Operation timed out.'
-    );
+test('timeout(n, fn): fn returns a value', (t) => {
+    return timeout(100, () => {})
+    .then(t.pass);
+});
+
+test('timeout(n, fn): fn throws', (t) => {
+    return timeout(10, () => { throw new Error('no'); })
+    .then(t.fail, (err) => {
+        t.is(err.message, 'no');
+    });
 });

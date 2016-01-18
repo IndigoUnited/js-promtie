@@ -17,10 +17,10 @@ test('catchIf(predicateFn, fn): on predicate returning false', (t) => {
     );
 });
 
-test('catchIf(object, fn): on object match', (t) => {
-    function CustomError() {}
+test('catchIf(object, fn): custom error instance match', (t) => {
+    function CustomError(msg) { this.message = msg; }
     CustomError.prototype = Object.create(Error.prototype);
-    CustomError.constructor = function (msg) { this.message = msg; };
+    CustomError.constructor = function () {};
 
     return Promise.reject(new CustomError('ENOENT: file not found'))
     .catch(catchIf(CustomError, (err) => {
@@ -28,7 +28,7 @@ test('catchIf(object, fn): on object match', (t) => {
     }));
 });
 
-test('catchIf(object, fn): on object match', (t) => {
+test('catchIf(object, fn): custom error instance failed match', (t) => {
     function CustomError() {}
     CustomError.prototype = Object.create(Error.prototype);
     CustomError.constructor = function (msg) { this.message = msg; };
