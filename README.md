@@ -3,7 +3,8 @@
  > Neatly dress up your native promises with simple but powerful utils.
 
 Unlike `Bluebird` or `Q`, promtie aims to be used with native promises by making it very easy to start a chain of promises or to intersect a set of promises with an each or map iteration.
-`Promtie` is just as powerful as `Bluebird` or `Q`, but instead of forcing the usage of custom Promise instances, with `Promtie` you can use native promises (or polyfills).
+`Promtie` is just as powerful as `Bluebird` or `Q`, but instead of forcing the usage of custom Promise instances, with `Promtie` you can use native promises.
+This module includes the most common utils needed to work with collections of promises: `each`, `map`, `filter`, `reduce`, ...; as well as other common patterns when using promises: `delay`, `timeout`, `retry`, `spread`, `catchIf`, ...
 
 ```javascript
 import promtie from 'promtie';
@@ -14,7 +15,7 @@ promtie.map([Promise.resolve('fancy unicorn'), 'fancy unicorn nº 2'], greetUnic
 .then(promtie.each(feedUnicorns));
 ```
 
-You can also use each util separately without requiring all the utils. This is the recomended way to use it.
+You can also use each util separately without requiring the whole module. This is the recomended way to use it.
 
 ```javascript
 import { each, map } from 'promtie';
@@ -23,7 +24,6 @@ import { each, map } from 'promtie';
 var each = require('promtie/lib/each');
 ```
 
-This module includes the most common utils needed to work with collections of promises: `each`, `map`, `filter`, `reduce`, ...; as well as other common patterns when using promises: `delay`, `timeout`, `retry`, `spread`, `catchIf`, ...
 
 ## Installation
 
@@ -342,8 +342,7 @@ db.getUser(userId)
 
 `through(fn) -> Function`:
 Excecute `fn` while passing the resolved value or rejection through, regardless of the promise's resolved value or rejection.
-The promise fulfillment value is passed through and the rejection error as well.
-This is similar to the try/catch finally, meaning, regardless of the promise's end result, we execute this code. **Example:**
+When used on both the fulfillment and rejection handlers, this is similar to the try/catch finally, meaning, regardless of the promise's end result, we execute this code. **Example:**
 
 ```javascript
 import { through } from 'promtie';
@@ -406,8 +405,8 @@ feedUnicornAsync(unicorn, 'morning rainbow')
 ### promisifyAll
 
 `promisifyAll(object, [targetObject]) -> Object`:
-Promisifies all the enumerable own functions of an object, returning a new object, or assigning methods to the `targetObject`.
-Methods that also have methods are recursevely promisified. **Example:**
+Promisifies all the enumerable functions of an object, returning a new object, or assigning methods to the `targetObject`.
+Methods that also have methods are recursively promisified. **Example:**
 
 ```javascript
 import { promisifyAll } from 'promtie';
