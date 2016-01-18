@@ -17,7 +17,8 @@
 [david-dm-dev-image]:https://img.shields.io/david/dev/IndigoUnited/js-promtie.svg
 
 
-Unlike `Bluebird` or `Q`, promtie aims to be used with native promises by making it very easy to start a chain of promises or to intersect a set of promises with an each or map iteration.
+Unlike `Bluebird` or `Q`, promtie aims to be used with native promises by making it very easy to start a chain of promises or to intersect a set of promises with, for example, an each or map iteration.
+
 `Promtie` is just as powerful as `Bluebird` or `Q`, but instead of forcing the usage of custom Promise instances, with `Promtie` you can use native promises.
 This module includes the most common utils needed to work with collections of promises: `each`, `map`, `filter`, `reduce`, ...; as well as other common patterns when using promises: `delay`, `timeout`, `retry`, `spread`, `catchIf`, ...
 
@@ -56,11 +57,11 @@ var each = require('promtie/lib/each');
  - [retry](#retry)
  - [delay](#delay)
  - [timeout](#timeout)
- - [catchIf](#catchIf)
+ - [catchIf](#catchif)
  - [through](#through)
  - [nodeify](#nodeify)
  - [promisify](#promisify)
- - [promisifyAll](#promisifyAll)
+ - [promisifyAll](#promisifyall)
 
 ### each
 
@@ -353,7 +354,7 @@ db.getUser(userId)
 }));
 ```
 
-### throught
+### through
 
 `through(fn) -> Function`:
 Excecute `fn` while passing the resolved value or rejection through, regardless of the promise's resolved value or rejection.
