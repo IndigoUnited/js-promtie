@@ -1,6 +1,6 @@
 {
   "name": "promtie",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Neatly dress up your native promises with simple but powerful utils.",
   "main": "index.js",
   "scripts": {
