@@ -21,6 +21,25 @@ test('values(object)', (t) => {
     });
 });
 
+test('values(object): deal with not native promises', (t) => {
+    const input = {
+        key1: 'value1',
+        key2: { then: (cb) => cb('value2') },
+        key3: Promise.resolve('value3'),
+        key4: 'value4',
+    };
+
+    return values(input)
+    .then((result) => {
+        t.same(result, {
+            key1: 'value1',
+            key2: 'value2',
+            key3: 'value3',
+            key4: 'value4',
+        });
+    });
+});
+
 test('values(fn)', (t) => {
     const input = {
         key1: 'value1',
