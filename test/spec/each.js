@@ -52,12 +52,12 @@ test('each(arr, fn): iterator function returns promise', (t) => {
 test('each(fn): fn throws', (t) => {
     return Promise.resolve([Promise.resolve(1), 2, 3, 4])
     .then(each(() => { throw new Error('Failed'); }))
-    .then(t.fail, (err) => t.is(err.message, 'Failed'));
+    .then(() => t.fail('Promise expected to reject'), (err) => t.is(err.message, 'Failed'));
 });
 
 test('each(arr, fn): deal with promise failure', (t) => {
     return each([Promise.resolve(1), 2, 3, 4], () => {
         return Promise.reject(new Error('Failure'));
     })
-    .then(t.fail, (err) => t.is(err.message, 'Failure'));
+    .then(() => t.fail('Promise expected to reject'), (err) => t.is(err.message, 'Failure'));
 });
