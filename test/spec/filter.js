@@ -54,10 +54,7 @@ test('filter(arr, fn, options): limit concurrency', (t) => {
 
     return filter([Promise.resolve(1), 2, 3, 4], () => {
         return new Promise((resolve) => {
-            setTimeout(
-                () => resolve((Date.now() - start) >= 500),
-                250
-            ); // First 2 are not delayed.
+            setTimeout(() => resolve((Date.now() - start) >= 500), 250);
         });
     }, { concurrency: 2 })
     .then((result) => {
