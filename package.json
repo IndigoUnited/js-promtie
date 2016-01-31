@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "eslint **/*.js && ava test/spec --tap | tap-nyan",
-    "test-cov": "nyc ava test/spec --reporter=lcov && echo coverage report: coverage/lcov-report/index.html"
+    "test-cov": "nyc ava test/spec --reporter=lcov && echo coverage report: coverage/lcov-report/index.html",
+    "prepublish": "cat package.json && mv lib/*.js . && rmdir lib && sed \"s/\\/lib//\" index.js > index_.js && mv index_.js index.js && sed -i.bak \"s/require('../require('./\" *.js && rm *.bak",
+    "postpublish": "git checkout . && git clean -f"
   },
   "bugs": {
     "url": "https://github.com/IndigoUnited/js-promtie/issues/"
