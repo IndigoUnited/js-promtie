@@ -1,4 +1,4 @@
-import promisify from '../../lib/promisify';
+import { promisify } from '../../';
 import test from 'ava';
 
 test('promisify(fn): callback called on success', (t) => {

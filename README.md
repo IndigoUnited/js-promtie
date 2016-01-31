@@ -37,7 +37,7 @@ You can also use each util separately without requiring the whole module. This i
 import { each, map } from 'promtie';
 
 // using require
-var each = require('promtie/lib/each');
+var each = require('promtie/each');
 ```
 
 
