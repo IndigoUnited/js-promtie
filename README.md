@@ -65,8 +65,8 @@ var each = require('promtie/lib/each');
 
 ### each
 
-`each([array], fn) -> Promise | Function`:
-Iterates over the `array` and calls `fn` on each value (promise that resolves to a value) in series. **Example:**
+`each(array, fn) -> Promise`:
+Iterates over the `array` and calls `fn` on each value (or promise that resolves to a value) in series.
 
 ```javascript
 import { each } from 'promtie';
@@ -76,7 +76,7 @@ each([1, 2, 3], (value, index, length) => requestPage(value))
 ```
 
 `each(fn) -> Function`:
-If you omit the array, `each` returns a function that takes the array instead as an argument. **Example:**
+If you omit the array, `each` returns a function that takes the array instead as an argument.
 
 ```javascript
 import { each } from 'promtie';
@@ -88,9 +88,9 @@ Promise.resolve([1, 2, 3])
 
 ### map
 
-`map([array], fn, options) -> Promise | Function`:
+`map(array, fn, options) -> Promise`:
 Iterates over the `array` and calls `fn` on each value (promise that resolves to a value) in parallel.
-Concurrency can be controlled with `options.concurrency`. **Example:**
+Concurrency can be controlled with `options.concurrency`.
 
 ```javascript
 import { map } from 'promtie';
@@ -100,7 +100,7 @@ map([1, 2, 3], (value, index, length) => requestPage(value), { concurrency: 2 })
 ```
 
 `map(fn, options) -> Function`:
-If you omit the array, `map` returns a function that takes the array instead as an argument. **Example:**
+If you omit the array, `map` returns a function that takes the array instead as an argument.
 
 ```javascript
 import { map } from 'promtie';
@@ -112,9 +112,9 @@ Promise.resolve([1, 2, 3])
 
 ### filter
 
-`filter([array], fn, options) -> Promise | Function`:
+`filter(array, fn, [options]) -> Promise`:
 Iterates over the `array` and filters out the array values if they do not pass the function test.
-Concurrency can be controlled with `options.concurrency`. **Example:**
+Concurrency can be controlled with `options.concurrency`
 
 ```javascript
 import { filter } from 'promtie';
@@ -123,8 +123,8 @@ filter([1, 2, 3], (value, index, length) => isOdd(value), { concurrency: 2 })
 .then(pages => console.log('odd pages', pages));
 ```
 
-`filter(fn, options) -> Function`:
-If you omit the array, `filter` returns a function that takes the array instead as an argument. **Example:**
+`filter(fn, [options]) -> Function`:
+If you omit the array, `filter` returns a function that takes the array instead as an argument.
 
 ```javascript
 import { filter } from 'promtie';
@@ -136,8 +136,8 @@ Promise.resolve([1, 2, 3])
 
 ### reduce
 
-`reduce([array], fn, [initialValue]) -> Promise | Function`:
-Iterates over the array and calls fn on each value and accumulates the result to reduce it to a single value. **Example:**
+`reduce(array, fn, [initialValue]) -> Promise`:
+Iterates over the array and calls fn on each value and accumulates the result to reduce it to a single value.
 
 ```javascript
 import { reduce } from 'promtie';
@@ -147,7 +147,7 @@ reduce([1, 2, 3], (acc, value, index, length) => acc + value, 0)
 ```
 
 `reduce(fn, [initialValue]) -> Function`:
-If you omit the array, `reduce` returns a function that takes the array instead as an argument. **Example:**
+If you omit the array, `reduce` returns a function that takes the array instead as an argument.
 
 ```javascript
 import { reduce } from 'promtie';
@@ -159,8 +159,8 @@ Promise.resolve([1, 2, 3])
 
 ### values
 
-`values(object | fn) -> Promise | Function`:
-Resolve the values of an object, whether they are promises or not, fulfilled. **Example:**
+`values(object) -> Promise`:
+Resolve the values of an object, whether they are promises or not, fulfilled.
 
 ```javascript
 import { values } from 'promtie';
@@ -175,7 +175,7 @@ values({
 ```
 
 `values(fn) -> Function`:
-If you omit the object, `values` returns a function that takes the object instead as an argument. **Example:**
+If you omit the object, `values` returns a function that takes the object instead as an argument.
 
 ```javascript
 import { values } from 'promtie';
@@ -192,7 +192,7 @@ Promise.resolve({
 ### attempt
 
 `attempt(fn) -> Promise`:
-Start a chain of promises while mapping synchronous exceptions to promise rejections. **Example:**
+Start a chain of promises while mapping synchronous exceptions to promise rejections.
 
 ```javascript
 import { readFileSync } from 'fs';
@@ -208,23 +208,8 @@ attempt(() => JSON.parse(readFileSync('unicorn.json').toString()))
 
 ### spread
 
-`spread([array], fn, [ctx]) -> Function | Promise`:
+`spread(array, fn) -> Promise`:
 Spreads array values to the arguments of `fn`.
-You can pass a context object to bind it to the function call. **Example:**
-
-```javascript
-import { spread } from 'promtie';
-
-Promise.resolve([fetchData(), fetchMetadata(), 'v0.2.1'])
-.then(spread((data, meta, version) => {
-    console.log('got data:', data);
-    console.log('meta:', meta);
-    console.log('version:', version);
-}));
-```
-
-`spread(array, fn, [ctx]) -> Promise`:
-If you omit the array, `spread` returns a function that takes the array instead as an argument. **Example:**
 
 ```javascript
 import { spread } from 'promtie';
@@ -239,10 +224,24 @@ spread([fetchData(), fetchMetadata(), 'v0.2.1'], (data, meta, version) => {
 .then(normalizeData);
 ```
 
+`spread(array, fn) -> Function`:
+If you omit the array, `spread` returns a function that takes the array instead as an argument.
+
+```javascript
+import { spread } from 'promtie';
+
+Promise.resolve([fetchData(), fetchMetadata(), 'v0.2.1'])
+.then(spread((data, meta, version) => {
+    console.log('got data:', data);
+    console.log('meta:', meta);
+    console.log('version:', version);
+}));
+```
+
 ### retry
 
 `retry(n, fn, [options]) -> Promise`:
-Retry a function `n` times. Delay in between retries can be configured with `options.delay`. **Example:**
+Retry a function `n` times. Delay in between retries can be configured with `options.delay`.
 
 ```javascript
 import { retry, catchIf } from 'promtie'
@@ -256,8 +255,8 @@ retry(3, retryAgain => {
 
 ### delay
 
-`delay(n, [fn]) -> Function | Promise`:
-Delays the execution of the next promise by `n` milliseconds. **Example:**
+`delay(n) -> Function`:
+Delays the execution of the next promise by `n` milliseconds.
 
 ```javascript
 import { map, delay } from 'promtie';
@@ -276,7 +275,7 @@ map(users, user => {
 
 `delay(n, fn) -> Promise`:
 Alternatively, if you also pass a function, `delay` returns a promise.
-Useful for starting a promise chain with a delay. **Example:**
+Useful for starting a promise chain with a delay.
 
 ```javascript
 import { delay } from 'promtie';
@@ -292,7 +291,7 @@ delay(200, server.listen)
 
 `timeout(n, fn | promise) -> Promise`:
 Do not wait more than `n` milliseconds for the operation to finish.
-If Timeout is reached, the promise is rejected with `timeout.TimeoutError`. **Example:**
+If Timeout is reached, the promise is rejected with `timeout.TimeoutError`.
 
 ```javascript
 import { timeout, map, catchIf } from 'promtie';
@@ -309,10 +308,10 @@ getTopUsers()
 
 ### catchIf
 
-`catchIf(predicateFn | object, fn) -> Function`:
+`catchIf(predicateFn, fn) -> Function`:
 Returns a function that will handle an error if it passes the predicate function test.
 If the predicate returns false, the error is propagated and `fn` is not called.
-Useful for treating different types of errors without cluttering the code with switch cases/ifs. **Example:**
+Useful for treating different types of errors without cluttering the code with switch cases/ifs.
 
 ```javascript
 import { catchIf } from 'promtie';
@@ -333,7 +332,7 @@ db.getUser(userId)
 ```
 
 `catchIf(object, fn) -> Function`:
-Alternaively, you can pass an object to be matched with error instance. **Example:**
+Alternaively, you can pass an object to be matched with error instance.
 
 ```javascript
 import { catchIf } from 'promtie';
@@ -357,8 +356,8 @@ db.getUser(userId)
 ### through
 
 `through(fn) -> Function`:
-Excecute `fn` while passing the resolved value or rejection through, regardless of the promise's resolved value or rejection.
-When used on both the fulfillment and rejection handlers, this is similar to the try/catch finally, meaning, regardless of the promise's end result, we execute this code. **Example:**
+Execute `fn` while passing the resolved value or rejection through, regardless of the promise's resolved value or rejection.
+When used on both the fulfillment and rejection handlers, this is similar to the try/catch finally, meaning, regardless of the promise's end result, this code is executed.
 
 ```javascript
 import { through } from 'promtie';
@@ -379,7 +378,7 @@ db.getUser(userId)
 `nodeify([fn]) -> Function`:
 Returns a function that calls the callback function with the resulting value or the error. If the callback throws an error, it will be thrown to the global context.
 If no callback is provided, the returned function simply returns the value or continues to propagate the error.
-Useful for APIs that still want to support callback style. **Example:**
+Useful for APIs that still want to support callback style.
 
 ```javascript
 import { nodeify } from 'promtie';
@@ -401,7 +400,7 @@ function fetch(cb) {
 ### promisify
 
 `promisify(fn) -> Function`:
-Promisifies a callback style function. **Example:**
+Promisifies a callback style function.
 
 ```javascript
 import { promisify } from 'promtie';
@@ -422,7 +421,7 @@ feedUnicornAsync(unicorn, 'morning rainbow')
 
 `promisifyAll(object, [targetObject]) -> Object`:
 Promisifies all the enumerable functions of an object, returning a new object, or assigning methods to the `targetObject`.
-Methods that also have methods are recursively promisified. **Example:**
+Methods that also have methods are recursively promisified.
 
 ```javascript
 import { promisifyAll } from 'promtie';
