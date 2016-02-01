@@ -7,5 +7,5 @@ rmdir lib
 # fix require paths
 sed "s/\/lib//" index.js > index_.js
 mv index_.js index.js
-sed -i.bak "s/require('..\/util/require('.\/util/" *.js
+sed -i.bak "s/require('..\//require('.\//" *.js
 rm *.bak
