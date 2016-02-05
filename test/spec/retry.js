@@ -51,7 +51,7 @@ test('retry(n, fn): retry function called at least once but promise fulfills', (
     .then((result) => {
         t.is(countdown, 2);
         t.is(result, 'unicorn is no longer angry');
-    }, t.fail);
+    });
 });
 
 test('retry(n, fn): should not retry when fn throws', (t) => {

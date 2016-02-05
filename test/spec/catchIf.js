@@ -14,7 +14,7 @@ test('catchIf(predicateFn, fn): on predicate returning true', (t) => {
 test('catchIf(predicateFn, fn): on predicate returning false', (t) => {
     return t.throws(
         Promise.reject(new Error('ENOENT: file not found'))
-        .catch(catchIf(() => false, t.fail)),
+        .catch(catchIf(() => false, () => t.fail('should not have failed'))),
         'ENOENT: file not found'
     );
 });
@@ -39,7 +39,7 @@ test('catchIf(object, fn): custom error instance failed match', (t) => {
 
     return t.throws(
         Promise.reject(new Error('ENOENT: file not found'))
-        .catch(catchIf(CustomError, t.fail)),
+        .catch(catchIf(CustomError, () => t.fail('should not have matched CustomError'))),
         'ENOENT: file not found'
     );
 });
