@@ -17,6 +17,8 @@ exports.delay = require('./lib/delay');
 exports.timeout = require('./lib/timeout');
 exports.catchIf = require('./lib/catchIf');
 exports.through = require('./lib/through');
+exports.whilst = require('./lib/whilst');
+// exports.doWhilst = require('./lib/doWhilst');
 exports.nodeify = require('./lib/nodeify');
 
 // Promisification
