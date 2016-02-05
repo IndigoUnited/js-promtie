@@ -1,4 +1,4 @@
-import promisify from '../../lib/promisify';
+import { promisify } from '../../';
 import test from 'ava';
 
 test('promisify(fn): callback called on success', (t) => {
@@ -11,8 +11,7 @@ test('promisify(fn): callback called on success', (t) => {
     }
 
     return feedUnicornAsync('kip', 'purple and blue')
-    .then((result) => t.is(result, 'kip ate the whole purple and blue'))
-    .catch(t.fail);
+    .then((result) => t.is(result, 'kip ate the whole purple and blue'));
 });
 
 test('promisify(fn): callback called on failure', (t) => {
@@ -23,7 +22,7 @@ test('promisify(fn): callback called on failure', (t) => {
     }
 
     return t.throws(
-        feedUnicornAsync('kip', 'purple and blue').then(t.fail),
+        feedUnicornAsync('kip', 'purple and blue').then(() => t.fail('should not have failed')),
         'UnicornNotHungry: time until meal time: 1h12'
     );
 });
@@ -36,7 +35,7 @@ test('promisify(fn): callback throws', (t) => {
     }
 
     return t.throws(
-        feedUnicornAsync('kip', 'purple and blue').then(t.fail),
+        feedUnicornAsync('kip', 'purple and blue').then(() => t.fail('should not have failed')),
         'Unicorns do not exist :"('
     );
 });

@@ -2,8 +2,6 @@
 
 'use strict';
 
-// TODO: allow each util to be requirable with require('promtie/each')
-
 // Collections
 exports.each = require('./lib/each');
 exports.map = require('./lib/map');
