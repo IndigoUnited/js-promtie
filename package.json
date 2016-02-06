@@ -4,10 +4,12 @@
   "description": "Neatly dress up your native promises with simple but powerful utils.",
   "main": "index.js",
   "scripts": {
-    "test": "eslint **/*.js && ava test/spec --tap | tap-nyan",
+    "lint": "eslist **/*.js",
+    "test": "npm run lint && ava test/spec --tap | tap-nyan",
     "test-cov": "nyc ava test/spec --reporter=lcov && echo coverage report: coverage/lcov-report/index.html",
-    "build": "scripts/build && npm t",
-    "unbuild": "scripts/unbuild"
+    "build": "scripts/build",
+    "postbuild": "scripts/postbuild",
+    "_publish": "npm run build && npm t && npm run publish && npm run postbuild"
   },
   "bugs": {
     "url": "https://github.com/IndigoUnited/js-promtie/issues/"
