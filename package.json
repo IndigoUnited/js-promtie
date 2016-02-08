@@ -8,8 +8,8 @@
     "test": "npm run lint && ava test/spec --tap | tap-nyan",
     "test-cov": "nyc ava test/spec --reporter=lcov && echo coverage report: coverage/lcov-report/index.html",
     "build": "scripts/build",
-    "postbuild": "scripts/postbuild",
-    "_publish": "npm run build && npm t && npm run publish && npm run postbuild"
+    "unbuild": "scripts/postbuild",
+    "_publish": "npm run build && npm t && npm publish && npm run unbuild"
   },
   "bugs": {
     "url": "https://github.com/IndigoUnited/js-promtie/issues/"
