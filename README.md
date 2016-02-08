@@ -58,6 +58,8 @@ var each = require('promtie/each');
  - [delay](#delay)
  - [timeout](#timeout)
  - [catchIf](#catchif)
+ - [whilst](#whilst)
+ - [times](#times)
  - [through](#through)
  - [nodeify](#nodeify)
  - [promisify](#promisify)
@@ -171,7 +173,7 @@ values({
     key3: Promise.resolve('value3'),
     key4: 'value4',
 })
-.then(result => console.log('got value 3:', result.key3)); // 'value3'
+.then(result => console.log(`got value 3: ${result.key3}`)); // 'value3'
 ```
 
 `values(fn) -> Function`:
@@ -199,7 +201,7 @@ import { readFileSync } from 'fs';
 import { attempt } from 'promtie';
 
 attempt(() => JSON.parse(readFileSync('unicorn.json').toString()))
-.then(unicorn => console.log('Unicorn\'s name is:', unicorn.name), err => {
+.then(unicorn => console.log(`Unicorn\'s name is: ${unicorn.name}`), err => {
     // Catch synchronous errors such as ENOENT or SyntaxError (for invalid json)
     console.error('Failed to read unicorn:', err);
     console.error(err.stack);
@@ -442,7 +444,7 @@ import { promisify } from 'promtie';
 const feedUnicornAsync = promisify(feedUnicorn);
 
 function feedUnicorn(unicorn, rainbow, callback) {
-    console.log('${unicorn} eats ${rainbow}');
+    console.log(`${unicorn} eats ${rainbow}`);
     callback(null, '~burp');
 }
 
