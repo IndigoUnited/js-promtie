@@ -2,11 +2,10 @@
 
 # move utils to lib folder
 mkdir lib
+mv util lib/
 mv *.js lib/
 mv lib/index.js .
 
 # fix require paths
 sed "s/require('.\//require('.\/lib\//" index.js > index_.js
 mv index_.js index.js
-sed -i.bak "s/require('.\/util/require('..\/util/" lib/*.js
-rm lib/*.bak
