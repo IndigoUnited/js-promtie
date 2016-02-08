@@ -367,20 +367,6 @@ whilst(
 , { delay: 150 })
 ```
 
-### doWhilst
-
-`doWhilst(fn, conditionFn, [options]) -> Promise`:
-Execute `fn` whilst the `conditionFn` returns true (inverse of `whilst`). `fn` and `conditionFn` can return a value or a promise. Delay in between iterations can be configured with `options.delay` (default is 0).
-
-```javascript
-import { doWhilst } from 'promtie';
-
-doWhilst(
-    () => notifyUser(userId, 'Waiting for user to be ready...'),
-    () => db.getUser(userId).then(user => user.state !== 'ready')
-), { delay: 150 })
-```
-
 ### through
 
 `through(fn) -> Function`:
