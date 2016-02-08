@@ -4,7 +4,7 @@
   "description": "Neatly dress up your native promises with simple but powerful utils.",
   "main": "index.js",
   "scripts": {
-    "lint": "eslist **/*.js",
+    "lint": "eslint **/*.js",
     "test": "npm run lint && ava test/spec --tap | tap-nyan",
     "test-cov": "nyc ava test/spec --reporter=lcov && echo coverage report: coverage/lcov-report/index.html",
     "build": "scripts/build",
