@@ -364,8 +364,28 @@ import { whilst } from 'promtie';
 whilst(
     () => db.getUser(userId).then(user => user.state !== 'ready'),
     () => notifyUser(userId, 'Waiting for user to be ready...')
-, { delay: 150 })
+), { delay: 150 });
 ```
+
+### times
+
+`times(n, fn) -> Promise`:
+Execute `fn`, `n` times. The returned promise fulfills to the `n` results from each `fn` call.
+`fn` calls are run in parallel.
+
+```javascript
+import uuid from 'uuid';
+import { times } from 'promtie';
+
+times(15, i => {
+    return db.set(`user!${i}`, {
+        id: uuid(),
+        name: `user ${i}`,
+    });
+})
+.then(users => console.log('15 users created', users));
+```
+
 
 ### through
 
