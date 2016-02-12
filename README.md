@@ -8,9 +8,9 @@
 [downloads-image]:http://img.shields.io/npm/dm/promtie.svg?style=flat-square
 [npm-image]:http://img.shields.io/npm/v/promtie.svg?style=flat-square
 [travis-url]:https://travis-ci.org/IndigoUnited/js-promtie
-[travis-image]:http://img.shields.io/travis/IndigoUnited/js-promtie.svg?branch=master&style=flat-square
+[travis-image]:http://img.shields.io/travis/IndigoUnited/js-promtie/master.svg?style=flat-square
 [coveralls-url]:https://coveralls.io/r/IndigoUnited/js-promtie
-[coveralls-image]:https://img.shields.io/coveralls/IndigoUnited/js-promtie.svg?branch=master&style=flat-square
+[coveralls-image]:https://img.shields.io/coveralls/IndigoUnited/js-promtie/master.svg?style=flat-square
 [david-dm-url]:https://david-dm.org/IndigoUnited/js-promtie
 [david-dm-image]:https://img.shields.io/david/IndigoUnited/js-promtie.svg?style=flat-square
 [david-dm-dev-url]:https://david-dm.org/IndigoUnited/js-promtie#info=devDependencies
