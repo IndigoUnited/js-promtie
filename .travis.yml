@@ -3,6 +3,5 @@ node_js:
   - "0.12"
   - "4"
   - "5"
-script: "eslint **/*.js && ava test/spec"
-after_success:
-    - "nyc report --reporter=text-lcov | ./node_modules/.bin/coveralls"
+script: "npm run lint && ava test/spec"
+after_success: "nyc report --reporter=text-lcov | ./node_modules/.bin/coveralls"
