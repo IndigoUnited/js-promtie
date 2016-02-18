@@ -1,6 +1,6 @@
 {
     "extends": [
-        "../node_modules/@carsy/eslint-config/es6.js",
-        "../node_modules/@carsy/eslint-config/addons/es6-modules.js"
+        "@carsy/eslint-config/es6.js",
+        "@carsy/eslint-config/addons/es6-modules.js"
     ]
 }

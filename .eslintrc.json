@@ -1,8 +1,8 @@
 {
     "root": true,
     "extends": [
-        "./node_modules/@carsy/eslint-config/es5.js",
-        "./node_modules/@carsy/eslint-config/addons/node.js"
+        "@carsy/eslint-config/es5.js",
+        "@carsy/eslint-config/addons/node.js"
     ],
     "rules": {
         "no-loop-func": 0
