@@ -52,6 +52,7 @@ var each = require('promtie/each');
  - [filter](#filter)
  - [reduce](#reduce)
  - [values](#values)
+ - [settle](#settle)
  - [attempt](#attempt)
  - [spread](#spread)
  - [retry](#retry)
@@ -189,6 +190,25 @@ Promise.resolve({
     key4: 'value4',
 })
 .then(values(result => console.log('got value 3:', result.key3))) // 'value3'
+```
+
+### settle
+
+`settle(array) -> Promise`:
+Wait until all the promises present in the array settle, and then resolve a promise with all the fulfilment values or rejections.
+
+```javascript
+import got from 'got';
+import { settle } from 'promtie';
+
+settle(['https://google.com', 'https://baboom.com'].map(got))
+.then(settledRequests => {
+    settledRequests.forEach(settledRequest => {
+        settledRequest.fulfilled && console.log('Request successfull. Response body:', settledRequest.value.body);
+
+        settledRequest.rejected && console.error('Request failed. Response error:', settledRequest.reason);
+    })
+});
 ```
 
 ### attempt
