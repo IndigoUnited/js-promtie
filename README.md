@@ -196,12 +196,13 @@ Promise.resolve({
 
 `settle(array) -> Promise`:
 Wait until all the promises in the array settle, and then resolve a promise with all the fulfilment values or rejections.
+Concurrency can be controlled with `options.concurrency`.
 
 ```javascript
 import got from 'got';
 import { settle } from 'promtie';
 
-settle(['https://google.com', 'https://baboom.com'].map(got))
+settle(['https://google.com', 'https://baboom.com'].map(got), { concurrency: 1 })
 .then(settledRequests => {
     settledRequests.forEach(settledRequest => {
         settledRequest.fulfilled && console.log('Request successfull. Response body:', settledRequest.value.body);
