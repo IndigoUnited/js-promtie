@@ -10,7 +10,7 @@
     "test-publish": "npm run build && npm t ; npm run unbuild",
     "build": "scripts/build",
     "unbuild": "scripts/postbuild",
-    "_publish": "npm run build && npm t && npm publish && npm run unbuild"
+    "_publish": "git push --tags && npm run build && npm t && npm publish && npm run unbuild"
   },
   "bugs": {
     "url": "https://github.com/IndigoUnited/js-promtie/issues/"
