@@ -24,8 +24,6 @@ test('promisifyAll(object): object with own method', (t) => {
 });
 
 test('promisifyAll(object): object with prototype method', (t) => {
-    let jeffy;
-
     function Unicorn(name) {
         this.name = name;
     }
@@ -37,7 +35,7 @@ test('promisifyAll(object): object with prototype method', (t) => {
         callback(new Error(`UnicornNotHungry: ${this.name} is not hungry ATM.`));
     };
 
-    jeffy = promisifyAll(new Unicorn('jeffy'));
+    const jeffy = promisifyAll(new Unicorn('jeffy'));
 
     t.true(jeffy.run() instanceof Promise);
 
