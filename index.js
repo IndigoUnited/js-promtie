@@ -10,6 +10,7 @@ exports.reduce = require('./lib/reduce');
 exports.values = require('./lib/values');
 
 // Others
+exports.settle = require('./lib/settle');
 exports.attempt = require('./lib/attempt');
 exports.spread = require('./lib/spread');
 exports.retry = require('./lib/retry');

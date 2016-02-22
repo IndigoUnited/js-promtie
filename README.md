@@ -195,7 +195,7 @@ Promise.resolve({
 ### settle
 
 `settle(array) -> Promise`:
-Wait until all the promises present in the array settle, and then resolve a promise with all the fulfilment values or rejections.
+Wait until all the promises in the array settle, and then resolve a promise with all the fulfilment values or rejections.
 
 ```javascript
 import got from 'got';
