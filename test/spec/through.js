@@ -2,7 +2,7 @@ import { through } from '../../';
 import Promise from '../util/promise';
 import test from 'ava';
 
-test('through(fn)', (t) => {
+test('through(fn)', t => {
     return Promise.resolve('unicorns')
     .then(through((value) => {
         t.is(value, 'unicorns');
@@ -12,7 +12,7 @@ test('through(fn)', (t) => {
     });
 });
 
-test('through(fn): fn returns promise', (t) => {
+test('through(fn): fn returns promise', t => {
     return Promise.resolve('unicorns')
     .then(through((value) => {
         t.is(value, 'unicorns');
@@ -24,7 +24,7 @@ test('through(fn): fn returns promise', (t) => {
     });
 });
 
-test('through(fn): deal with promise failure', (t) => {
+test('through(fn): deal with promise failure', t => {
     return t.throws(
         Promise.reject(new Error('unicorn is sad'))
         .then(null, through((err) => {
@@ -34,7 +34,7 @@ test('through(fn): deal with promise failure', (t) => {
     );
 });
 
-test('through(fn): deal with promise failure when fn returns promise', (t) => {
+test('through(fn): deal with promise failure when fn returns promise', t => {
     return t.throws(
         Promise.reject(new Error('unicorn is sad'))
         .then(null, through((err) => {

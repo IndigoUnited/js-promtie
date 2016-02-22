@@ -2,7 +2,7 @@ import { delay } from '../../';
 import Promise from '../util/promise';
 import test from 'ava';
 
-test('delay(n, fn)', (t) => {
+test('delay(n, fn)', t => {
     const start = Date.now();
 
     return delay(2000, () => {
@@ -17,7 +17,7 @@ test('delay(n, fn)', (t) => {
     });
 });
 
-test('delay(n)', (t) => {
+test('delay(n)', t => {
     const start = Date.now();
 
     return Promise.resolve('delay')
@@ -30,7 +30,7 @@ test('delay(n)', (t) => {
     });
 });
 
-test('delay(n): deal with promise failure', (t) => {
+test('delay(n): deal with promise failure', t => {
     const start = Date.now();
 
     t.plan(2);

@@ -2,7 +2,7 @@ import { reduce } from '../../';
 import Promise from '../util/promise';
 import test from 'ava';
 
-test('reduce(fn, initialValue)', (t) => {
+test('reduce(fn, initialValue)', t => {
     const input = [1, 2, 3, 4];
 
     return Promise.resolve([Promise.resolve(1), 2, Promise.resolve(3), 4])
@@ -15,7 +15,7 @@ test('reduce(fn, initialValue)', (t) => {
     .then((result) => t.is(result, 10));
 });
 
-test('reduce(fn)', (t) => {
+test('reduce(fn)', t => {
     const input = [1, 2, 3, 4];
 
     return Promise.resolve([Promise.resolve(1), 2, Promise.resolve(3), 4])
@@ -28,7 +28,7 @@ test('reduce(fn)', (t) => {
     .then((result) => t.is(result, 10));
 });
 
-test('reduce(arr, fn, initialValue)', (t) => {
+test('reduce(arr, fn, initialValue)', t => {
     const input = [1, 2, 3, 4];
 
     return reduce([Promise.resolve(1), 2, Promise.resolve(3), 4],
@@ -42,7 +42,7 @@ test('reduce(arr, fn, initialValue)', (t) => {
     .then((result) => t.same(result, 10));
 });
 
-test('reduce(arr, fn, initialValue): initialValue is a promise', (t) => {
+test('reduce(arr, fn, initialValue): initialValue is a promise', t => {
     const input = [1, 2, 3, 4];
 
     return reduce([Promise.resolve(1), 2, Promise.resolve(3), 4],
@@ -56,7 +56,7 @@ test('reduce(arr, fn, initialValue): initialValue is a promise', (t) => {
     .then((result) => t.same(result, 10));
 });
 
-test('reduce(arr, fn): fn returns a value', (t) => {
+test('reduce(arr, fn): fn returns a value', t => {
     const input = [1, 2, 3, 4];
 
     return reduce([Promise.resolve(1), 2, Promise.resolve(3), 4],
@@ -70,7 +70,7 @@ test('reduce(arr, fn): fn returns a value', (t) => {
     .then((result) => t.same(result, 10));
 });
 
-test('reduce(arr, fn): deal with promise failure', (t) => {
+test('reduce(arr, fn): deal with promise failure', t => {
     const input = [1, 2, 3, 4];
 
     return t.throws(reduce([Promise.resolve(1), 2, Promise.reject(new Error('Failed to fetch third value')), 4],

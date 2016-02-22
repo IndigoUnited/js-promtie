@@ -1,7 +1,7 @@
 import { whilst } from '../../';
 import test from 'ava';
 
-test('whilst(conditionFn, fn)', (t) => {
+test('whilst(conditionFn, fn)', t => {
     let count = 0;
     let lastCount = count;
 
@@ -17,7 +17,7 @@ test('whilst(conditionFn, fn)', (t) => {
     .then(() => t.ok(lastCount > 3));
 });
 
-test('whilst(conditionFn, fn, options)', (t) => {
+test('whilst(conditionFn, fn, options)', t => {
     const start = Date.now();
     let count = 0;
     let lastCount = count;
@@ -37,7 +37,7 @@ test('whilst(conditionFn, fn, options)', (t) => {
     });
 });
 
-test('whilst(conditionFn, fn): conditionFn returns promise', (t) => {
+test('whilst(conditionFn, fn): conditionFn returns promise', t => {
     let count = 0;
     let lastCount = count;
 
@@ -53,7 +53,7 @@ test('whilst(conditionFn, fn): conditionFn returns promise', (t) => {
     .then(() => t.ok(lastCount > 3));
 });
 
-test('whilst(conditionFn, fn): fn returns promise', (t) => {
+test('whilst(conditionFn, fn): fn returns promise', t => {
     let count = 0;
     let lastCount = count;
 
@@ -73,7 +73,7 @@ test('whilst(conditionFn, fn): fn returns promise', (t) => {
     .then(() => t.ok(lastCount > 3));
 });
 
-test('whilst(conditionFn, fn): conditionFn and fn return promises', (t) => {
+test('whilst(conditionFn, fn): conditionFn and fn return promises', t => {
     let count = 0;
     let lastCount = count;
 
@@ -93,7 +93,7 @@ test('whilst(conditionFn, fn): conditionFn and fn return promises', (t) => {
     .then(() => t.ok(lastCount > 3));
 });
 
-test('whilst(conditionFn, fn): conditionFn throws', (t) => {
+test('whilst(conditionFn, fn): conditionFn throws', t => {
     return whilst(() => {
         throw new Error('condition not met');
     }, () => {
@@ -102,7 +102,7 @@ test('whilst(conditionFn, fn): conditionFn throws', (t) => {
     .then(() => t.fail('expected to fail'), err => t.is(err.message, 'condition not met'));
 });
 
-test('whilst(conditionFn, fn): fn throws', (t) => {
+test('whilst(conditionFn, fn): fn throws', t => {
     return whilst(() => true, () => {
         throw new Error('condition not met');
     })

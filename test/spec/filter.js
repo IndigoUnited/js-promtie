@@ -2,7 +2,7 @@ import { filter } from '../../';
 import Promise from '../util/promise';
 import test from 'ava';
 
-test('filter(fn)', (t) => {
+test('filter(fn)', t => {
     const input = [1, 2, 3, 4];
 
     return Promise.resolve([Promise.resolve(1), 2, Promise.resolve(3), 4])
@@ -17,7 +17,7 @@ test('filter(fn)', (t) => {
     });
 });
 
-test('filter(arr, fn)', (t) => {
+test('filter(arr, fn)', t => {
     const input = [1, 2, 3, 4];
 
     return filter([Promise.resolve(1), 2, Promise.resolve(3), 4],
@@ -33,7 +33,7 @@ test('filter(arr, fn)', (t) => {
     });
 });
 
-test('filter(arr, fn): filter function returns promise', (t) => {
+test('filter(arr, fn): filter function returns promise', t => {
     const input = [1, 2, 3, 4];
 
     return filter([Promise.resolve(1), 2, Promise.resolve(3), 4],
@@ -49,7 +49,7 @@ test('filter(arr, fn): filter function returns promise', (t) => {
     });
 });
 
-test('filter(arr, fn, options): limit concurrency', (t) => {
+test('filter(arr, fn, options): limit concurrency', t => {
     const start = Date.now();
 
     return filter([Promise.resolve(1), 2, 3, 4], () => {

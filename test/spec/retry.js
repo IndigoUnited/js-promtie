@@ -2,7 +2,7 @@ import { retry } from '../../';
 import Promise from '../util/promise';
 import test from 'ava';
 
-test('retry(n, fn): retry function not called', (t) => {
+test('retry(n, fn): retry function not called', t => {
     let countdown = 2;
 
     return retry(2, (_, n) => {
@@ -15,7 +15,7 @@ test('retry(n, fn): retry function not called', (t) => {
     });
 });
 
-test('retry(n, fn): retry function called until promise rejects', (t) => {
+test('retry(n, fn): retry function called until promise rejects', t => {
     let countdown = 5;
 
     return retry(5, (retryAgain, n) => {
@@ -28,7 +28,7 @@ test('retry(n, fn): retry function called until promise rejects', (t) => {
     });
 });
 
-test('retry(n, fn): retry function called with no error until promise rejects', (t) => {
+test('retry(n, fn): retry function called with no error until promise rejects', t => {
     let countdown = 5;
 
     return retry(5, (retryAgain, n) => {
@@ -41,7 +41,7 @@ test('retry(n, fn): retry function called with no error until promise rejects', 
     });
 });
 
-test('retry(n, fn): retry function called at least once but promise fulfills', (t) => {
+test('retry(n, fn): retry function called at least once but promise fulfills', t => {
     let countdown = 5;
 
     return retry(5, (retryAgain, n) => {
@@ -54,7 +54,7 @@ test('retry(n, fn): retry function called at least once but promise fulfills', (
     });
 });
 
-test('retry(n, fn): should not retry when fn throws', (t) => {
+test('retry(n, fn): should not retry when fn throws', t => {
     let countdown = 3;
 
     return retry(3, () => {
@@ -67,7 +67,7 @@ test('retry(n, fn): should not retry when fn throws', (t) => {
     });
 });
 
-test('retry(n, fn): should not retry when fn returns a rejected promise', (t) => {
+test('retry(n, fn): should not retry when fn returns a rejected promise', t => {
     let countdown = 3;
 
     return retry(3, () => {
@@ -80,7 +80,7 @@ test('retry(n, fn): should not retry when fn returns a rejected promise', (t) =>
     });
 });
 
-test('retry(n, fn, options): delay between retries', (t) => {
+test('retry(n, fn, options): delay between retries', t => {
     const start = Date.now();
     let countdown = 3;
 

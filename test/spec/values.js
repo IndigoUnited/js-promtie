@@ -2,7 +2,7 @@ import { values } from '../../';
 import Promise from '../util/promise';
 import test from 'ava';
 
-test('values(object)', (t) => {
+test('values(object)', t => {
     const input = {
         key1: 'value1',
         key2: Promise.resolve('value2'),
@@ -21,7 +21,7 @@ test('values(object)', (t) => {
     });
 });
 
-test('values(object): deal with not native promises', (t) => {
+test('values(object): deal with not native promises', t => {
     const input = {
         key1: 'value1',
         key2: { then: (cb) => cb('value2') },
@@ -40,7 +40,7 @@ test('values(object): deal with not native promises', (t) => {
     });
 });
 
-test('values(fn)', (t) => {
+test('values(fn)', t => {
     const input = {
         key1: 'value1',
         key2: Promise.resolve('value2'),
@@ -59,7 +59,7 @@ test('values(fn)', (t) => {
     }));
 });
 
-test('values(object): deal with promise rejection', (t) => {
+test('values(object): deal with promise rejection', t => {
     const input = {
         key1: 'value1',
         key2: Promise.resolve('value2'),
@@ -70,7 +70,7 @@ test('values(object): deal with promise rejection', (t) => {
     return t.throws(values(input), 'error: value3');
 });
 
-test('values(fn): deal with promise rejection', (t) => {
+test('values(fn): deal with promise rejection', t => {
     const input = {
         key1: 'value1',
         key2: Promise.resolve('value2'),

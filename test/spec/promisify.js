@@ -1,7 +1,7 @@
 import { promisify } from '../../';
 import test from 'ava';
 
-test('promisify(fn): callback called on success', (t) => {
+test('promisify(fn): callback called on success', t => {
     const feedUnicornAsync = promisify(feedUnicorn);
 
     function feedUnicorn(unicorn, rainbow, callback) {
@@ -14,7 +14,7 @@ test('promisify(fn): callback called on success', (t) => {
     .then((result) => t.is(result, 'kip ate the whole purple and blue'));
 });
 
-test('promisify(fn): callback called on failure', (t) => {
+test('promisify(fn): callback called on failure', t => {
     const feedUnicornAsync = promisify(feedUnicorn);
 
     function feedUnicorn(unicorn, rainbow, callback) {
@@ -27,7 +27,7 @@ test('promisify(fn): callback called on failure', (t) => {
     );
 });
 
-test('promisify(fn): callback throws', (t) => {
+test('promisify(fn): callback throws', t => {
     const feedUnicornAsync = promisify(feedUnicorn);
 
     function feedUnicorn() {

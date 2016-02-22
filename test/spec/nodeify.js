@@ -2,7 +2,7 @@ import { nodeify } from '../../';
 import Promise from '../util/promise';
 import test from 'ava';
 
-test.cb('nodeify(fn)', (t) => {
+test.cb('nodeify(fn)', t => {
     t.plan(2);
 
     function unicorn(cb) {
@@ -18,7 +18,7 @@ test.cb('nodeify(fn)', (t) => {
     });
 });
 
-test.cb('nodeify(fn): deal with promise failure', (t) => {
+test.cb('nodeify(fn): deal with promise failure', t => {
     t.plan(2);
 
     function unicorn(cb) {
@@ -50,7 +50,7 @@ function throwsUncaughtException(fn) {
     });
 }
 
-test.cb('nodeify(fn): deal with fn throwing when called on failure', (t) => {
+test.cb('nodeify(fn): deal with fn throwing when called on failure', t => {
     throwsUncaughtException((err) => {
         t.is(err.message, 'Failed promise');
         t.end();
@@ -65,7 +65,7 @@ test.cb('nodeify(fn): deal with fn throwing when called on failure', (t) => {
     }), null);
 });
 
-test.cb('nodeify(fn): deal with fn throwing when called with success', (t) => {
+test.cb('nodeify(fn): deal with fn throwing when called with success', t => {
     throwsUncaughtException((err) => {
         t.is(err.message, 'Failed promise');
         t.end();
@@ -80,7 +80,7 @@ test.cb('nodeify(fn): deal with fn throwing when called with success', (t) => {
     }));
 });
 
-test('nodeify()', (t) => {
+test('nodeify()', t => {
     return Promise.resolve(1)
     .then(nodeify())
     .then((value) => {
@@ -88,7 +88,7 @@ test('nodeify()', (t) => {
     });
 });
 
-test('nodeify(): deal with failure', (t) => {
+test('nodeify(): deal with failure', t => {
     return t.throws(
         Promise.reject(new Error('Bad unicorn'))
         .then(nodeify(), nodeify()),

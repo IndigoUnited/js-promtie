@@ -1,7 +1,7 @@
 import { settle } from '../../';
 import test from 'ava';
 
-test('settle', t => {
+test('settle(array)', t => {
     return settle([Promise.resolve(1), Promise.reject(2)])
     .then(settledPromises => {
         t.same(settledPromises, [{

@@ -2,7 +2,7 @@ import { map } from '../../';
 import Promise from '../util/promise';
 import test from 'ava';
 
-test('map(fn)', (t) => {
+test('map(fn)', t => {
     const expected = [1, 2, 3, 4];
 
     return Promise.resolve([Promise.resolve(1), 2, Promise.resolve(3), 4])
@@ -17,7 +17,7 @@ test('map(fn)', (t) => {
     });
 });
 
-test('map(arr, fn)', (t) => {
+test('map(arr, fn)', t => {
     const expected = [1, 2, 3, 4];
 
     return map([Promise.resolve(1), 2, Promise.resolve(3), 4],
@@ -33,7 +33,7 @@ test('map(arr, fn)', (t) => {
     });
 });
 
-test('map(arr, fn): mapper function returns promise', (t) => {
+test('map(arr, fn): mapper function returns promise', t => {
     const expected = [1, 2, 3, 4];
 
     return map([Promise.resolve(1), 2, Promise.resolve(3), 4],
@@ -49,7 +49,7 @@ test('map(arr, fn): mapper function returns promise', (t) => {
     });
 });
 
-test('map(arr, fn): mapper function throws', (t) => {
+test('map(arr, fn): mapper function throws', t => {
     return t.throws(
         map([Promise.resolve(1), 2, Promise.resolve(3), 4], () => {
             throw new Error('Mapper function failed');
@@ -58,7 +58,7 @@ test('map(arr, fn): mapper function throws', (t) => {
     );
 });
 
-test('map(arr, fn): deal with promise failure', (t) => {
+test('map(arr, fn): deal with promise failure', t => {
     const expected = [1, 2, 3, 4];
 
     return t.throws(map([Promise.resolve(1), 2, Promise.reject(new Error('Failed to fetch third value')), 4],
@@ -71,7 +71,7 @@ test('map(arr, fn): deal with promise failure', (t) => {
     ), 'Failed to fetch third value');
 });
 
-test('map(arr, fn, options): limit concurrency', (t) => {
+test('map(arr, fn, options): limit concurrency', t => {
     const start = Date.now();
     const expected = [1, 2, 3];
 

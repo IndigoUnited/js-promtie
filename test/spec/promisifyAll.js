@@ -2,7 +2,7 @@ import { promisifyAll } from '../../';
 import Promise from '../util/promise';
 import test from 'ava';
 
-test('promisifyAll(object): object with own method', (t) => {
+test('promisifyAll(object): object with own method', t => {
     const unicorn = promisifyAll({
         name: 'jeffy',
         run(callback) {
@@ -23,7 +23,7 @@ test('promisifyAll(object): object with own method', (t) => {
     });
 });
 
-test('promisifyAll(object): object with prototype method', (t) => {
+test('promisifyAll(object): object with prototype method', t => {
     function Unicorn(name) {
         this.name = name;
     }
@@ -47,7 +47,7 @@ test('promisifyAll(object): object with prototype method', (t) => {
     });
 });
 
-test('promisifyAll(object): object with own method that also contains methods', (t) => {
+test('promisifyAll(object): object with own method that also contains methods', t => {
     let unicorn = {
         name: 'jeffy',
         run(callback) {
@@ -65,7 +65,7 @@ test('promisifyAll(object): object with own method that also contains methods', 
     .then((result) => t.is(result, 'Running slowly'));
 });
 
-test('promisifyAll(object): object with prototype method that also contains methods', (t) => {
+test('promisifyAll(object): object with prototype method that also contains methods', t => {
     let jeffy;
 
     function Unicorn(name) {
