@@ -1,6 +1,6 @@
-/* eslint global-require: 0 */
-
 'use strict';
+
+/* eslint-disable global-require */
 
 // Collections
 exports.each = require('./lib/each');
@@ -8,9 +8,9 @@ exports.map = require('./lib/map');
 exports.filter = require('./lib/filter');
 exports.reduce = require('./lib/reduce');
 exports.values = require('./lib/values');
+exports.settle = require('./lib/settle');
 
 // Others
-exports.settle = require('./lib/settle');
 exports.attempt = require('./lib/attempt');
 exports.spread = require('./lib/spread');
 exports.retry = require('./lib/retry');
@@ -25,3 +25,5 @@ exports.nodeify = require('./lib/nodeify');
 // Promisification
 exports.promisify = require('./lib/promisify');
 exports.promisifyAll = require('./lib/promisifyAll');
+
+/* eslint-enable global-require */
