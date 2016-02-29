@@ -80,16 +80,46 @@ test('map(arr, fn, options): limit concurrency', t => {
             setTimeout(
                 () => resolve({ n: value, time: Date.now() - start }),
                 250
-            ); // First 2 are not delayed.
+            );
         });
     }, { concurrency: 2 })
-    .then((result) => {
+    .then(result => {
         t.is(result.length, 3);
 
         result.forEach((value, i) => {
             t.is(value.n, expected[i]);
-            // Only the last two should have been delayed
+            // Only the last one should be delayed
             t.true(i >= 2 ? value.time >= 500 : value.time < 500);
+        });
+    });
+});
+
+test('map(array, fn, options): limit concurrency (stress test)', t => {
+    const start = Date.now();
+    const total = 500;
+    const concurrency = 50;
+    const input = [];
+
+    while (input.length < total) {
+        input.push(input.length);
+    }
+
+    return map(input.map((n, i) => i), value => {
+        return new Promise((resolve) => {
+            setTimeout(
+                () => resolve({ n: value, time: Date.now() - start }),
+                50
+            );
+        });
+    }, { concurrency })
+    .then(result => {
+        t.is(result.length, total);
+
+        result.forEach((value, i) => {
+            const maxExpected = Math.floor(i / concurrency) * concurrency + concurrency;
+
+            t.is(value.n, i);
+            t.true(value.time >= maxExpected);
         });
     });
 });
