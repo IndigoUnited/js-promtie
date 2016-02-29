@@ -354,7 +354,7 @@ db.getUser(userId)
 ```
 
 `catchIf(object, fn) -> Function`:
-Alternaively, you can pass an object to be matched with error instance.
+Alternatively, you can pass an object to be matched with error instance.
 
 ```javascript
 import { catchIf } from 'promtie';
