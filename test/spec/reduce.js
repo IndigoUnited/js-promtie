@@ -12,7 +12,7 @@ test('reduce(fn, initialValue)', t => {
 
         return Promise.resolve(acc + n);
     }, 0))
-    .then((result) => t.is(result, 10));
+    .then(result => t.is(result, 10));
 });
 
 test('reduce(fn)', t => {
@@ -25,10 +25,10 @@ test('reduce(fn)', t => {
 
         return Promise.resolve(acc + n);
     }))
-    .then((result) => t.is(result, 10));
+    .then(result => t.is(result, 10));
 });
 
-test('reduce(arr, fn, initialValue)', t => {
+test('reduce(array, fn, initialValue)', t => {
     const input = [1, 2, 3, 4];
 
     return reduce([Promise.resolve(1), 2, Promise.resolve(3), 4],
@@ -39,10 +39,10 @@ test('reduce(arr, fn, initialValue)', t => {
             return acc + n;
         }, 0
     )
-    .then((result) => t.same(result, 10));
+    .then(result => t.same(result, 10));
 });
 
-test('reduce(arr, fn, initialValue): initialValue is a promise', t => {
+test('reduce(array, fn, initialValue): initialValue is a promise', t => {
     const input = [1, 2, 3, 4];
 
     return reduce([Promise.resolve(1), 2, Promise.resolve(3), 4],
@@ -53,10 +53,10 @@ test('reduce(arr, fn, initialValue): initialValue is a promise', t => {
             return acc + n;
         }, Promise.resolve(0)
     )
-    .then((result) => t.same(result, 10));
+    .then(result => t.same(result, 10));
 });
 
-test('reduce(arr, fn): fn returns a value', t => {
+test('reduce(array, fn): fn returns a value', t => {
     const input = [1, 2, 3, 4];
 
     return reduce([Promise.resolve(1), 2, Promise.resolve(3), 4],
@@ -67,10 +67,10 @@ test('reduce(arr, fn): fn returns a value', t => {
             return acc + n;
         }
     )
-    .then((result) => t.same(result, 10));
+    .then(result => t.same(result, 10));
 });
 
-test('reduce(arr, fn): deal with promise failure', t => {
+test('reduce(array, fn): deal with promise failure', t => {
     const input = [1, 2, 3, 4];
 
     return t.throws(reduce([Promise.resolve(1), 2, Promise.reject(new Error('Failed to fetch third value')), 4],

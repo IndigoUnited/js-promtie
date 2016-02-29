@@ -41,7 +41,7 @@ function throwsUncaughtException(fn) {
 
     // Remove AVA listener & track uncaught exception
     process.removeListener('uncaughtException', avaListener);
-    process.once('uncaughtException', (err) => {
+    process.once('uncaughtException', err => {
         // Restore listeners exactly how they were, including order
         process.removeAllListeners('uncaughtException');
         listeners.forEach((listener) => process.on('uncaughtException', listener));
@@ -51,7 +51,7 @@ function throwsUncaughtException(fn) {
 }
 
 test.cb('nodeify(fn): deal with fn throwing when called on failure', t => {
-    throwsUncaughtException((err) => {
+    throwsUncaughtException(err => {
         t.is(err.message, 'Failed promise');
         t.end();
     });
@@ -66,7 +66,7 @@ test.cb('nodeify(fn): deal with fn throwing when called on failure', t => {
 });
 
 test.cb('nodeify(fn): deal with fn throwing when called with success', t => {
-    throwsUncaughtException((err) => {
+    throwsUncaughtException(err => {
         t.is(err.message, 'Failed promise');
         t.end();
     });
@@ -83,7 +83,7 @@ test.cb('nodeify(fn): deal with fn throwing when called with success', t => {
 test('nodeify()', t => {
     return Promise.resolve(1)
     .then(nodeify())
-    .then((value) => {
+    .then(value => {
         t.is(value, 1);
     });
 });

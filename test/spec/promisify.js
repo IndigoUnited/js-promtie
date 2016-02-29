@@ -11,7 +11,7 @@ test('promisify(fn): callback called on success', t => {
     }
 
     return feedUnicornAsync('kip', 'purple and blue')
-    .then((result) => t.is(result, 'kip ate the whole purple and blue'));
+    .then(result => t.is(result, 'kip ate the whole purple and blue'));
 });
 
 test('promisify(fn): callback called on failure', t => {

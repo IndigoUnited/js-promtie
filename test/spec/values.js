@@ -11,7 +11,7 @@ test('values(object)', t => {
     };
 
     return values(input)
-    .then((result) => {
+    .then(result => {
         t.same(result, {
             key1: 'value1',
             key2: 'value2',
@@ -30,7 +30,7 @@ test('values(object): deal with not native promises', t => {
     };
 
     return values(input)
-    .then((result) => {
+    .then(result => {
         t.same(result, {
             key1: 'value1',
             key2: 'value2',
@@ -49,7 +49,7 @@ test('values(fn)', t => {
     };
 
     return Promise.resolve(input)
-    .then(values((result) => {
+    .then(values(result => {
         t.same(result, {
             key1: 'value1',
             key2: 'value2',
@@ -79,7 +79,7 @@ test('values(fn): deal with promise rejection', t => {
     };
 
     return t.throws(Promise.resolve(input)
-    .then(values((result) => {
+    .then(values(result => {
         t.same(result, {
             key1: 'value1',
             key2: 'value2',

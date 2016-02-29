@@ -22,7 +22,7 @@ test('delay(n)', t => {
 
     return Promise.resolve('delay')
     .then(delay(2000))
-    .then((value) => {
+    .then(value => {
         const elapsed = Date.now() - start;
 
         t.true(elapsed >= 250);
@@ -37,7 +37,7 @@ test('delay(n): deal with promise failure', t => {
 
     return Promise.reject(new Error('delay'))
     .then(null, delay(2000))
-    .catch((err) => {
+    .catch(err => {
         const elapsed = Date.now() - start;
 
         t.true(elapsed >= 250);

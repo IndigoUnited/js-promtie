@@ -12,12 +12,12 @@ test('filter(fn)', t => {
 
         return n > 2;
     }))
-    .then((arr) => {
-        t.same(arr, input.slice(2, input.length));
+    .then(array => {
+        t.same(array, input.slice(2, input.length));
     });
 });
 
-test('filter(arr, fn)', t => {
+test('filter(array, fn)', t => {
     const input = [1, 2, 3, 4];
 
     return filter([Promise.resolve(1), 2, Promise.resolve(3), 4],
@@ -28,12 +28,12 @@ test('filter(arr, fn)', t => {
             return n > 2;
         }
     )
-    .then((arr) => {
-        t.same(arr, input.slice(2, input.length));
+    .then(array => {
+        t.same(array, input.slice(2, input.length));
     });
 });
 
-test('filter(arr, fn): filter function returns promise', t => {
+test('filter(array, fn): filter function returns promise', t => {
     const input = [1, 2, 3, 4];
 
     return filter([Promise.resolve(1), 2, Promise.resolve(3), 4],
@@ -44,12 +44,12 @@ test('filter(arr, fn): filter function returns promise', t => {
             return Promise.resolve(n > 2);
         }
     )
-    .then((arr) => {
-        t.same(arr, input.slice(2, input.length));
+    .then(array => {
+        t.same(array, input.slice(2, input.length));
     });
 });
 
-test('filter(arr, fn, options): limit concurrency', t => {
+test('filter(array, fn, options): limit concurrency', t => {
     const start = Date.now();
 
     return filter([Promise.resolve(1), 2, 3, 4], () => {
@@ -57,7 +57,7 @@ test('filter(arr, fn, options): limit concurrency', t => {
             setTimeout(() => resolve((Date.now() - start) >= 500), 250);
         });
     }, { concurrency: 2 })
-    .then((result) => {
+    .then(result => {
         t.same(result, [3, 4]);
     });
 });

@@ -9,7 +9,7 @@ test('retry(n, fn): retry function not called', t => {
         t.is(countdown--, n);
         return 'should not retry';
     })
-    .then((result) => {
+    .then(result => {
         t.is(result, 'should not retry');
         t.is(countdown, 1);
     });
@@ -22,7 +22,7 @@ test('retry(n, fn): retry function called until promise rejects', t => {
         t.is(countdown--, n);
         return retryAgain(new Error('The unicorn is angry D:'));
     })
-    .then(t.fail, (err) => {
+    .then(t.fail, err => {
         t.is(countdown, 0);
         t.is(err.message, 'The unicorn is angry D:');
     });
@@ -35,7 +35,7 @@ test('retry(n, fn): retry function called with no error until promise rejects', 
         t.is(countdown--, n);
         return retryAgain();
     })
-    .then(t.fail, (err) => {
+    .then(t.fail, err => {
         t.is(countdown, 0);
         t.is(err.message, 'RetryError');
     });
@@ -48,7 +48,7 @@ test('retry(n, fn): retry function called at least once but promise fulfills', t
         t.is(countdown--, n);
         return n > 3 ? retryAgain(new Error('The unicorn is angry D:')) : 'unicorn is no longer angry';
     })
-    .then((result) => {
+    .then(result => {
         t.is(countdown, 2);
         t.is(result, 'unicorn is no longer angry');
     });
@@ -61,7 +61,7 @@ test('retry(n, fn): should not retry when fn throws', t => {
         countdown--;
         throw new Error('Unicorns FTW');
     })
-    .then(t.fail, (err) => {
+    .then(t.fail, err => {
         t.is(countdown, 2);
         t.is(err.message, 'Unicorns FTW');
     });
@@ -74,7 +74,7 @@ test('retry(n, fn): should not retry when fn returns a rejected promise', t => {
         countdown--;
         return Promise.reject(new Error('Unicorns FTW'));
     })
-    .then(t.fail, (err) => {
+    .then(t.fail, err => {
         t.is(countdown, 2);
         t.is(err.message, 'Unicorns FTW');
     });
@@ -88,7 +88,7 @@ test('retry(n, fn, options): delay between retries', t => {
         countdown--;
         return retryAgain(new Error('Unicorns FTW'));
     }, { delay: 50 })
-    .then(t.fail, (err) => {
+    .then(t.fail, err => {
         t.is(countdown, 0);
         t.is(err.message, 'Unicorns FTW');
         t.true((Date.now() - start) >= 100);

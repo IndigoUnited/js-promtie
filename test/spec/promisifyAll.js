@@ -16,7 +16,7 @@ test('promisifyAll(object): object with own method', t => {
     t.true(unicorn.run() instanceof Promise);
 
     return unicorn.run()
-    .then((result) => {
+    .then(result => {
         t.is(result, 'jeffy started to run');
 
         return t.throws(unicorn.feed('blue and purple'), 'UnicornNotHungry: jeffy is not hungry ATM.');
@@ -40,7 +40,7 @@ test('promisifyAll(object): object with prototype method', t => {
     t.true(jeffy.run() instanceof Promise);
 
     return jeffy.run()
-    .then((result) => {
+    .then(result => {
         t.is(result, 'jeffy started to run');
 
         return t.throws(jeffy.feed('blue and purple'), 'UnicornNotHungry: jeffy is not hungry ATM.');
@@ -62,7 +62,7 @@ test('promisifyAll(object): object with own method that also contains methods', 
     unicorn = promisifyAll(unicorn);
 
     return unicorn.run.slowly()
-    .then((result) => t.is(result, 'Running slowly'));
+    .then(result => t.is(result, 'Running slowly'));
 });
 
 test('promisifyAll(object): object with prototype method that also contains methods', t => {
@@ -85,5 +85,5 @@ test('promisifyAll(object): object with prototype method that also contains meth
     jeffy = promisifyAll(jeffy);
 
     return jeffy.run.slowly()
-    .then((result) => t.is(result, 'Running slowly'));
+    .then(result => t.is(result, 'Running slowly'));
 });

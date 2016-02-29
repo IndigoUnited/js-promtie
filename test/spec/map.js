@@ -12,12 +12,12 @@ test('map(fn)', t => {
 
         return n * 2;
     }))
-    .then((arr) => {
-        t.same(arr, expected.map((n) => n * 2));
+    .then(array => {
+        t.same(array, expected.map((n) => n * 2));
     });
 });
 
-test('map(arr, fn)', t => {
+test('map(array, fn)', t => {
     const expected = [1, 2, 3, 4];
 
     return map([Promise.resolve(1), 2, Promise.resolve(3), 4],
@@ -28,12 +28,12 @@ test('map(arr, fn)', t => {
             return n * 2;
         }
     )
-    .then((arr) => {
-        t.same(arr, expected.map((n) => n * 2));
+    .then(array => {
+        t.same(array, expected.map((n) => n * 2));
     });
 });
 
-test('map(arr, fn): mapper function returns promise', t => {
+test('map(array, fn): mapper function returns promise', t => {
     const expected = [1, 2, 3, 4];
 
     return map([Promise.resolve(1), 2, Promise.resolve(3), 4],
@@ -44,12 +44,12 @@ test('map(arr, fn): mapper function returns promise', t => {
             return Promise.resolve(n * 2);
         }
     )
-    .then((arr) => {
-        t.same(arr, expected.map((n) => n * 2));
+    .then(array => {
+        t.same(array, expected.map((n) => n * 2));
     });
 });
 
-test('map(arr, fn): mapper function throws', t => {
+test('map(array, fn): mapper function throws', t => {
     return t.throws(
         map([Promise.resolve(1), 2, Promise.resolve(3), 4], () => {
             throw new Error('Mapper function failed');
@@ -58,7 +58,7 @@ test('map(arr, fn): mapper function throws', t => {
     );
 });
 
-test('map(arr, fn): deal with promise failure', t => {
+test('map(array, fn): deal with promise failure', t => {
     const expected = [1, 2, 3, 4];
 
     return t.throws(map([Promise.resolve(1), 2, Promise.reject(new Error('Failed to fetch third value')), 4],
@@ -71,11 +71,11 @@ test('map(arr, fn): deal with promise failure', t => {
     ), 'Failed to fetch third value');
 });
 
-test('map(arr, fn, options): limit concurrency', t => {
+test('map(array, fn, options): limit concurrency', t => {
     const start = Date.now();
     const expected = [1, 2, 3];
 
-    return map([Promise.resolve(1), 2, 3], (value) => {
+    return map([Promise.resolve(1), 2, 3], value => {
         return new Promise((resolve) => {
             setTimeout(
                 () => resolve({ n: value, time: Date.now() - start }),
