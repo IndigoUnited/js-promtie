@@ -394,6 +394,7 @@ whilst(
 `times(n, fn) -> Promise`:
 Execute `fn`, `n` times. The returned promise fulfills to the `n` results from each `fn` call.
 `fn` calls are run in parallel.
+Concurrency can be controlled with `options.concurrency`.
 
 ```javascript
 import uuid from 'uuid';
@@ -404,7 +405,7 @@ times(15, i => {
         id: uuid(),
         name: `user ${i}`,
     });
-})
+}, { concurrency: 5 })
 .then(users => console.log('15 users created', users));
 ```
 
