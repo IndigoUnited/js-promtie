@@ -79,12 +79,5 @@ test('values(fn): deal with promise rejection', t => {
     };
 
     return t.throws(Promise.resolve(input)
-    .then(values(result => {
-        t.same(result, {
-            key1: 'value1',
-            key2: 'value2',
-            key3: 'value3',
-            key4: 'value4',
-        });
-    })), 'error: value3');
+    .then(values(() => t.fail('expected to fail'))), 'error: value3');
 });
