@@ -39,7 +39,7 @@ test('reduce(array, fn, initialValue)', t => {
             return acc + n;
         }, 0
     )
-    .then(result => t.same(result, 10));
+    .then(result => t.deepEqual(result, 10));
 });
 
 test('reduce(array, fn, initialValue): initialValue is a promise', t => {
@@ -53,7 +53,7 @@ test('reduce(array, fn, initialValue): initialValue is a promise', t => {
             return acc + n;
         }, Promise.resolve(0)
     )
-    .then(result => t.same(result, 10));
+    .then(result => t.deepEqual(result, 10));
 });
 
 test('reduce(array, fn): fn returns a value', t => {
@@ -67,7 +67,7 @@ test('reduce(array, fn): fn returns a value', t => {
             return acc + n;
         }
     )
-    .then(result => t.same(result, 10));
+    .then(result => t.deepEqual(result, 10));
 });
 
 test('reduce(array, fn): deal with promise failure', t => {

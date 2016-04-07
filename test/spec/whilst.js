@@ -13,8 +13,8 @@ test('whilst(conditionFn, fn)', t => {
         lastCount = count;
 
         return count <= 3;
-    }, () => t.ok(count <= 3))
-    .then(() => t.ok(lastCount > 3));
+    }, () => t.truthy(count <= 3))
+    .then(() => t.truthy(lastCount > 3));
 });
 
 test('whilst(conditionFn, fn, options)', t => {
@@ -30,10 +30,10 @@ test('whilst(conditionFn, fn, options)', t => {
         lastCount = count;
 
         return count <= 3;
-    }, () => t.ok(count <= 3), { delay: 100 })
+    }, () => t.truthy(count <= 3), { delay: 100 })
     .then(() => {
-        t.ok(lastCount > 3);
-        t.ok((Date.now() - start) > 100);
+        t.truthy(lastCount > 3);
+        t.truthy((Date.now() - start) > 100);
     });
 });
 
@@ -49,8 +49,8 @@ test('whilst(conditionFn, fn): conditionFn returns promise', t => {
         lastCount = count;
 
         return Promise.resolve(count <= 3);
-    }, () => t.ok(count <= 3))
-    .then(() => t.ok(lastCount > 3));
+    }, () => t.truthy(count <= 3))
+    .then(() => t.truthy(lastCount > 3));
 });
 
 test('whilst(conditionFn, fn): fn returns promise', t => {
@@ -66,11 +66,11 @@ test('whilst(conditionFn, fn): fn returns promise', t => {
 
         return count <= 3;
     }, () => {
-        t.ok(count <= 3);
+        t.truthy(count <= 3);
 
         return Promise.resolve();
     })
-    .then(() => t.ok(lastCount > 3));
+    .then(() => t.truthy(lastCount > 3));
 });
 
 test('whilst(conditionFn, fn): conditionFn and fn return promises', t => {
@@ -86,11 +86,11 @@ test('whilst(conditionFn, fn): conditionFn and fn return promises', t => {
 
         return Promise.resolve(count <= 3);
     }, () => {
-        t.ok(count <= 3);
+        t.truthy(count <= 3);
 
         return Promise.resolve();
     })
-    .then(() => t.ok(lastCount > 3));
+    .then(() => t.truthy(lastCount > 3));
 });
 
 test('whilst(conditionFn, fn): conditionFn throws', t => {

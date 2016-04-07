@@ -13,7 +13,7 @@ test('map(fn)', t => {
         return n * 2;
     }))
     .then(array => {
-        t.same(array, expected.map((n) => n * 2));
+        t.deepEqual(array, expected.map((n) => n * 2));
     });
 });
 
@@ -29,7 +29,7 @@ test('map(array, fn)', t => {
         }
     )
     .then(array => {
-        t.same(array, expected.map((n) => n * 2));
+        t.deepEqual(array, expected.map((n) => n * 2));
     });
 });
 
@@ -45,7 +45,7 @@ test('map(array, fn): mapper function returns promise', t => {
         }
     )
     .then(array => {
-        t.same(array, expected.map((n) => n * 2));
+        t.deepEqual(array, expected.map((n) => n * 2));
     });
 });
 

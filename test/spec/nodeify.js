@@ -12,7 +12,7 @@ test.cb('nodeify(fn)', t => {
 
     unicorn((err, value) => {
         t.is(value, 1);
-        t.notOk(err);
+        t.falsy(err);
 
         t.end();
     });
@@ -28,7 +28,7 @@ test.cb('nodeify(fn): deal with promise failure', t => {
 
     unicorn((err, value) => {
         t.is(err.message, 'Failed promise');
-        t.notOk(value);
+        t.falsy(value);
 
         t.end();
     });
@@ -59,7 +59,7 @@ test.cb('nodeify(fn): deal with fn throwing when called on failure', t => {
     Promise.resolve('unicorn')
     .then(nodeify((err, value) => {
         t.is(value, 'unicorn');
-        t.notOk(err);
+        t.falsy(err);
 
         throw new Error('Failed promise');
     }), null);
@@ -74,7 +74,7 @@ test.cb('nodeify(fn): deal with fn throwing when called with success', t => {
     Promise.reject(new Error('Failed promise'))
     .then(null, nodeify((err, value) => {
         t.is(err.message, 'Failed promise');
-        t.notOk(value);
+        t.falsy(value);
 
         throw err;
     }));

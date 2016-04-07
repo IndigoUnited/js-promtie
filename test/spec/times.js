@@ -5,7 +5,7 @@ test('times(n, fn)', t => {
     return times(5, i => {
         return Promise.resolve(i * 10);
     })
-    .then(result => t.same(result, [10, 20, 30, 40, 50]));
+    .then(result => t.deepEqual(result, [10, 20, 30, 40, 50]));
 });
 
 test('times(n, fn): when fn throws, promise should reject', t => {

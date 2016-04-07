@@ -13,7 +13,7 @@ test('each(fn)', t => {
         return n * 10;
     }))
     .then(array => {
-        t.same(array, input);
+        t.deepEqual(array, input);
     });
 });
 
@@ -29,7 +29,7 @@ test('each(array, fn)', t => {
         }
     )
     .then(array => {
-        t.same(array, input);
+        t.deepEqual(array, input);
     });
 });
 
@@ -45,7 +45,7 @@ test('each(array, fn): iterator function returns promise', t => {
         }
     )
     .then(array => {
-        t.same(array, input);
+        t.deepEqual(array, input);
     });
 });
 

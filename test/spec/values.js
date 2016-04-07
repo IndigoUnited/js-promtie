@@ -12,7 +12,7 @@ test('values(object)', t => {
 
     return values(input)
     .then(result => {
-        t.same(result, {
+        t.deepEqual(result, {
             key1: 'value1',
             key2: 'value2',
             key3: 'value3',
@@ -31,7 +31,7 @@ test('values(object): deal with not native promises', t => {
 
     return values(input)
     .then(result => {
-        t.same(result, {
+        t.deepEqual(result, {
             key1: 'value1',
             key2: 'value2',
             key3: 'value3',
@@ -50,7 +50,7 @@ test('values(fn)', t => {
 
     return Promise.resolve(input)
     .then(values(result => {
-        t.same(result, {
+        t.deepEqual(result, {
             key1: 'value1',
             key2: 'value2',
             key3: 'value3',

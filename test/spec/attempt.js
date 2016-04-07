@@ -13,6 +13,6 @@ test('attempt(fn): deal with promise failure', t => {
         throw new Error('Bad unicorn');
     })
     .then(() => t.fail('Promise expected to reject'), err => {
-        t.ok(err instanceof Error);
+        t.truthy(err instanceof Error);
     });
 });
