@@ -1,7 +1,5 @@
 'use strict';
 
-/* eslint-disable global-require */
-
 // Collections
 exports.each = require('./lib/each');
 exports.map = require('./lib/map');
@@ -25,5 +23,3 @@ exports.nodeify = require('./lib/nodeify');
 // Promisification
 exports.promisify = require('./lib/promisify');
 exports.promisifyAll = require('./lib/promisifyAll');
-
-/* eslint-enable global-require */

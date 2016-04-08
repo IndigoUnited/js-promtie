@@ -32,7 +32,7 @@
   "author": "IndigoUnited <hello@indigounited.com> (http://indigounited.com)",
   "license": "MIT",
   "engines": {
-    "node": ">=0.12"
+    "node": ">=4"
   },
   "devDependencies": {
     "@carsy/eslint-config": "^0.2.0",

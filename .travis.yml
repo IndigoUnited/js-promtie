@@ -1,6 +1,5 @@
 language: node_js
 node_js:
-  - "0.12"
   - "4"
   - "5"
 script: "npm run lint && nyc ava test/spec && nyc report --reporter=text-lcov | ./node_modules/.bin/coveralls"

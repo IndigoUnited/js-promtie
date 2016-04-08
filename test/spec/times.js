@@ -2,9 +2,7 @@ import { times } from '../../';
 import test from 'ava';
 
 test('times(n, fn)', t => {
-    return times(5, i => {
-        return Promise.resolve(i * 10);
-    })
+    return times(5, i => Promise.resolve(i * 10))
     .then(result => t.deepEqual(result, [10, 20, 30, 40, 50]));
 });
 
