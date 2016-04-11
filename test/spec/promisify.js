@@ -2,24 +2,17 @@ import { promisify } from '../../';
 import test from 'ava';
 
 test('promisify(fn): callback called on success', t => {
+    const feedUnicorn = (unicorn, rainbow, callback) => callback(null, `${unicorn} ate the whole ${rainbow}!`);
     const feedUnicornAsync = promisify(feedUnicorn);
 
-    function feedUnicorn(unicorn, rainbow, callback) {
-        // FIXME For some reason this is failing in ava/lib/beautify-stack.js:15:62
-        // callback(null, `${unicorn} ate the whole ${rainbow}!`);
-        callback(null, unicorn + ' ate the whole ' + rainbow);
-    }
-
     return feedUnicornAsync('kip', 'purple and blue')
-    .then(result => t.is(result, 'kip ate the whole purple and blue'));
+    .then(result => t.is(result, 'kip ate the whole purple and blue!'));
 });
 
 test('promisify(fn): callback called on failure', t => {
-    const feedUnicornAsync = promisify(feedUnicorn);
-
-    function feedUnicorn(unicorn, rainbow, callback) {
+    const feedUnicorn = (unicorn, rainbow, callback) =>
         callback(new Error('UnicornNotHungry: time until meal time: 1h12'));
-    }
+    const feedUnicornAsync = promisify(feedUnicorn);
 
     return t.throws(
         feedUnicornAsync('kip', 'purple and blue').then(() => t.fail('should not have failed')),
@@ -28,11 +21,8 @@ test('promisify(fn): callback called on failure', t => {
 });
 
 test('promisify(fn): callback throws', t => {
+    const feedUnicorn = () => { throw new Error('Unicorns do not exist :"('); };
     const feedUnicornAsync = promisify(feedUnicorn);
-
-    function feedUnicorn() {
-        throw new Error('Unicorns do not exist :"(');
-    }
 
     return t.throws(
         feedUnicornAsync('kip', 'purple and blue').then(() => t.fail('should not have failed')),

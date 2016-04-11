@@ -7,6 +7,7 @@ test('retry(n, fn): retry function not called', t => {
 
     return retry(2, (_, n) => {
         t.is(countdown--, n);
+
         return 'should not retry';
     })
     .then(result => {
@@ -20,6 +21,7 @@ test('retry(n, fn): retry function called until promise rejects', t => {
 
     return retry(5, (retryAgain, n) => {
         t.is(countdown--, n);
+
         return retryAgain(new Error('The unicorn is angry D:'));
     })
     .then(t.fail, err => {
@@ -33,6 +35,7 @@ test('retry(n, fn): retry function called with no error until promise rejects', 
 
     return retry(5, (retryAgain, n) => {
         t.is(countdown--, n);
+
         return retryAgain();
     })
     .then(t.fail, err => {
@@ -46,6 +49,7 @@ test('retry(n, fn): retry function called at least once but promise fulfills', t
 
     return retry(5, (retryAgain, n) => {
         t.is(countdown--, n);
+
         return n > 3 ? retryAgain(new Error('The unicorn is angry D:')) : 'unicorn is no longer angry';
     })
     .then(result => {
@@ -72,6 +76,7 @@ test('retry(n, fn): should not retry when fn returns a rejected promise', t => {
 
     return retry(3, () => {
         countdown--;
+
         return Promise.reject(new Error('Unicorns FTW'));
     })
     .then(t.fail, err => {
@@ -86,6 +91,7 @@ test('retry(n, fn, options): delay between retries', t => {
 
     return retry(3, (retryAgain) => {
         countdown--;
+
         return retryAgain(new Error('Unicorns FTW'));
     }, { delay: 50 })
     .then(t.fail, err => {

@@ -5,10 +5,7 @@ import test from 'ava';
 test.cb('nodeify(fn)', t => {
     t.plan(2);
 
-    function unicorn(cb) {
-        return Promise.resolve(1)
-        .then(nodeify(cb), nodeify(cb));
-    }
+    const unicorn = cb => Promise.resolve(1).then(nodeify(cb), nodeify(cb));
 
     unicorn((err, value) => {
         t.is(value, 1);
@@ -21,10 +18,7 @@ test.cb('nodeify(fn)', t => {
 test.cb('nodeify(fn): deal with promise failure', t => {
     t.plan(2);
 
-    function unicorn(cb) {
-        return Promise.reject(new Error('Failed promise'))
-        .then(nodeify(cb), nodeify(cb));
-    }
+    const unicorn = cb => Promise.reject(new Error('Failed promise')).then(nodeify(cb), nodeify(cb));
 
     unicorn((err, value) => {
         t.is(err.message, 'Failed promise');
@@ -44,7 +38,7 @@ function throwsUncaughtException(fn) {
     process.once('uncaughtException', err => {
         // Restore listeners exactly how they were, including order
         process.removeAllListeners('uncaughtException');
-        listeners.forEach((listener) => process.on('uncaughtException', listener));
+        listeners.forEach(listener => process.on('uncaughtException', listener));
 
         fn(err);
     });
@@ -80,18 +74,16 @@ test.cb('nodeify(fn): deal with fn throwing when called with success', t => {
     }));
 });
 
-test('nodeify()', t => {
-    return Promise.resolve(1)
+test('nodeify()', t =>
+    Promise.resolve(1)
     .then(nodeify())
-    .then(value => {
-        t.is(value, 1);
-    });
-});
+    .then(value => t.is(value, 1))
+);
 
-test('nodeify(): deal with failure', t => {
-    return t.throws(
+test('nodeify(): deal with failure', t =>
+    t.throws(
         Promise.reject(new Error('Bad unicorn'))
         .then(nodeify(), nodeify()),
         'Bad unicorn'
-    );
-});
+    )
+);

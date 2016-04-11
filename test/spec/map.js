@@ -12,9 +12,7 @@ test('map(fn)', t => {
 
         return n * 2;
     }))
-    .then(array => {
-        t.deepEqual(array, expected.map((n) => n * 2));
-    });
+    .then(array => t.deepEqual(array, expected.map((n) => n * 2)));
 });
 
 test('map(array, fn)', t => {
@@ -28,9 +26,7 @@ test('map(array, fn)', t => {
             return n * 2;
         }
     )
-    .then(array => {
-        t.deepEqual(array, expected.map((n) => n * 2));
-    });
+    .then(array => t.deepEqual(array, expected.map((n) => n * 2)));
 });
 
 test('map(array, fn): mapper function returns promise', t => {
@@ -44,9 +40,7 @@ test('map(array, fn): mapper function returns promise', t => {
             return Promise.resolve(n * 2);
         }
     )
-    .then(array => {
-        t.deepEqual(array, expected.map((n) => n * 2));
-    });
+    .then(array => t.deepEqual(array, expected.map((n) => n * 2)));
 });
 
 test('map(array, fn): mapper function throws', t => {
@@ -75,14 +69,11 @@ test('map(array, fn, options): limit concurrency', t => {
     const start = Date.now();
     const expected = [1, 2, 3];
 
-    return map([Promise.resolve(1), 2, 3], value => {
-        return new Promise((resolve) => {
-            setTimeout(
-                () => resolve({ n: value, time: Date.now() - start }),
-                250
-            );
-        });
-    }, { concurrency: 2 })
+    return map([
+        Promise.resolve(1), 2, 3],
+        value => new Promise((resolve) => setTimeout(() => resolve({ n: value, time: Date.now() - start }), 250)),
+        { concurrency: 2 }
+    )
     .then(result => {
         t.is(result.length, 3);
 
@@ -104,14 +95,11 @@ test('map(array, fn, options): limit concurrency (stress test)', t => {
         input.push(input.length);
     }
 
-    return map(input.map((n, i) => i), value => {
-        return new Promise((resolve) => {
-            setTimeout(
-                () => resolve({ n: value, time: Date.now() - start }),
-                50
-            );
-        });
-    }, { concurrency })
+    return map(
+        input.map((n, i) => i),
+        value => new Promise(resolve => setTimeout(() => resolve({ n: value, time: Date.now() - start }), 50)),
+        { concurrency }
+    )
     .then(result => {
         t.is(result.length, total);
 

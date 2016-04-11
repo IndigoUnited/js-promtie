@@ -94,17 +94,11 @@ test('whilst(conditionFn, fn): conditionFn and fn return promises', t => {
 });
 
 test('whilst(conditionFn, fn): conditionFn throws', t => {
-    return whilst(() => {
-        throw new Error('condition not met');
-    }, () => {
-        t.fail('should not have run this');
-    })
+    return whilst(() => { throw new Error('condition not met'); }, () => t.fail('should not have run this'))
     .then(() => t.fail('expected to fail'), err => t.is(err.message, 'condition not met'));
 });
 
 test('whilst(conditionFn, fn): fn throws', t => {
-    return whilst(() => true, () => {
-        throw new Error('condition not met');
-    })
+    return whilst(() => true, () => { throw new Error('condition not met'); })
     .then(() => t.fail('expected to fail'), err => t.is(err.message, 'condition not met'));
 });

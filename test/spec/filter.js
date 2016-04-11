@@ -12,9 +12,7 @@ test('filter(fn)', t => {
 
         return n > 2;
     }))
-    .then(array => {
-        t.deepEqual(array, input.slice(2, input.length));
-    });
+    .then(array => t.deepEqual(array, [3, 4]));
 });
 
 test('filter(array, fn)', t => {
@@ -28,9 +26,7 @@ test('filter(array, fn)', t => {
             return n > 2;
         }
     )
-    .then(array => {
-        t.deepEqual(array, input.slice(2, input.length));
-    });
+    .then(array => t.deepEqual(array, [3, 4]));
 });
 
 test('filter(array, fn): filter function returns promise', t => {
@@ -44,20 +40,16 @@ test('filter(array, fn): filter function returns promise', t => {
             return Promise.resolve(n > 2);
         }
     )
-    .then(array => {
-        t.deepEqual(array, input.slice(2, input.length));
-    });
+    .then(array => t.deepEqual(array, [3, 4]));
 });
 
 test('filter(array, fn, options): limit concurrency', t => {
     const start = Date.now();
 
-    return filter([Promise.resolve(1), 2, 3, 4], () => {
-        return new Promise((resolve) => {
-            setTimeout(() => resolve((Date.now() - start) >= 500), 250);
-        });
-    }, { concurrency: 2 })
-    .then(result => {
-        t.deepEqual(result, [3, 4]);
-    });
+    return filter(
+        [Promise.resolve(1), 2, 3, 4],
+        () => new Promise(resolve => setTimeout(() => resolve((Date.now() - start) >= 500), 250)),
+        { concurrency: 2 }
+    )
+    .then(result => t.deepEqual(result, [3, 4]));
 });
