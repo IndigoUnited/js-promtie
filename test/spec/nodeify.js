@@ -2,7 +2,13 @@ import { nodeify } from '../../';
 import Promise from '../util/promise';
 import test from 'ava';
 
-test.cb('nodeify(fn)', t => {
+const originalSetImmediate = global.setImmediate;
+
+test.afterEach(() => {
+    global.setImmediate = originalSetImmediate;
+});
+
+test.cb.serial('nodeify(fn)', t => {
     t.plan(2);
 
     const unicorn = cb => Promise.resolve(1).then(nodeify(cb), nodeify(cb));
@@ -28,50 +34,48 @@ test.cb('nodeify(fn): deal with promise failure', t => {
     });
 });
 
-// TODO: Propose this method to AVA
-function throwsUncaughtException(fn) {
-    const listeners = process.listeners('uncaughtException');
-    const avaListener = listeners[listeners.length - 1];
-
-    // Remove AVA listener & track uncaught exception
-    process.removeListener('uncaughtException', avaListener);
-    process.once('uncaughtException', err => {
-        // Restore listeners exactly how they were, including order
-        process.removeAllListeners('uncaughtException');
-        listeners.forEach(listener => process.on('uncaughtException', listener));
-
-        fn(err);
-    });
-}
-
-test.cb('nodeify(fn): deal with fn throwing when called on failure', t => {
-    throwsUncaughtException(err => {
-        t.is(err.message, 'Failed promise');
-        t.end();
-    });
-
-    Promise.resolve('unicorn')
-    .then(nodeify((err, value) => {
+// TODO add test timeout (in the case setImmediate is not being called)
+test.cb.serial('nodeify(fn): deal with fn throwing when called on failure', t => {
+    const callback = (err, value) => {
         t.is(value, 'unicorn');
         t.falsy(err);
 
         throw new Error('Failed promise');
-    }), null);
+    };
+
+    global.setImmediate = callback => {
+        try {
+            return callback();
+        } catch (err) {
+            t.is(err.message, 'Failed promise');
+            t.end();
+        }
+    };
+
+    Promise.resolve('unicorn')
+    .then(nodeify(callback), null);
 });
 
-test.cb('nodeify(fn): deal with fn throwing when called with success', t => {
-    throwsUncaughtException(err => {
-        t.is(err.message, 'Failed promise');
-        t.end();
-    });
-
-    Promise.reject(new Error('Failed promise'))
-    .then(null, nodeify((err, value) => {
+// TODO add test timeout (in the case setImmediate is not being called)
+test.cb.serial('nodeify(fn): deal with fn throwing when called with success', t => {
+    const callback = (err, value) => {
         t.is(err.message, 'Failed promise');
         t.falsy(value);
 
         throw err;
-    }));
+    };
+
+    global.setImmediate = callback => {
+        try {
+            return callback();
+        } catch (err) {
+            t.is(err.message, 'Failed promise');
+            t.end();
+        }
+    };
+
+    Promise.reject(new Error('Failed promise'))
+    .then(null, nodeify(callback));
 });
 
 test('nodeify()', t =>
@@ -82,8 +86,7 @@ test('nodeify()', t =>
 
 test('nodeify(): deal with failure', t =>
     t.throws(
-        Promise.reject(new Error('Bad unicorn'))
-        .then(nodeify(), nodeify()),
+        Promise.reject(new Error('Bad unicorn')).then(nodeify(), nodeify()),
         'Bad unicorn'
     )
 );
