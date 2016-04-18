@@ -37,6 +37,7 @@
   "devDependencies": {
     "@carsy/eslint-config": "^0.2.0",
     "ava": "^0.14.0",
+    "babel-eslint": "^6.0.2",
     "coveralls": "^2.11.9",
     "eslint": "^2.6.0",
     "nyc": "^6.0.0",

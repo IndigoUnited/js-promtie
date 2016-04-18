@@ -1,4 +1,5 @@
 {
+    "parser": "babel-eslint",
     "extends": [
         "@carsy/eslint-config/addons/es6-modules.js"
     ]
