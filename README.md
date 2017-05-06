@@ -13,7 +13,7 @@
 [coveralls-image]:https://img.shields.io/coveralls/IndigoUnited/js-promtie/master.svg?style=flat-square
 [david-dm-url]:https://david-dm.org/IndigoUnited/js-promtie
 [david-dm-image]:https://img.shields.io/david/IndigoUnited/js-promtie.svg?style=flat-square
-[david-dm-dev-url]:https://david-dm.org/IndigoUnited/js-promtie#info=devDependencies
+[david-dm-dev-url]:https://david-dm.org/IndigoUnited/js-promtie?type=dev
 [david-dm-dev-image]:https://img.shields.io/david/dev/IndigoUnited/js-promtie.svg?style=flat-square
 
 
