@@ -2,7 +2,7 @@
 
 > Neatly dress up your native promises with simple but powerful utils.
 
-[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Dependency status][david-dm-image]][david-dm-url] [![Dev Dependency status][david-dm-dev-image]][david-dm-dev-url]
+[![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Dependency status][david-dm-image]][david-dm-url] [![Dev Dependency status][david-dm-dev-image]][david-dm-dev-url] [![Greenkeeper badge][greenkeeper-image]][greenkeeper-url]
 
 [npm-url]:https://npmjs.org/package/promtie
 [downloads-image]:http://img.shields.io/npm/dm/promtie.svg?style=flat-square
@@ -15,7 +15,8 @@
 [david-dm-image]:https://img.shields.io/david/IndigoUnited/js-promtie.svg?style=flat-square
 [david-dm-dev-url]:https://david-dm.org/IndigoUnited/js-promtie?type=dev
 [david-dm-dev-image]:https://img.shields.io/david/dev/IndigoUnited/js-promtie.svg?style=flat-square
-
+[greenkeeper-image]:https://badges.greenkeeper.io/IndigoUnited/js-promtie.svg?style=flat-square
+[greenkeeper-url]:https://greenkeeper.io/
 
 Unlike `Bluebird` or `Q`, promtie aims to be used with native promises by making it very easy to start a chain of promises or to intersect a set of promises with, for example, an each or map iteration.
 
