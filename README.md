@@ -1,5 +1,7 @@
 # Promtie 👔
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/IndigoUnited/js-promtie.svg)](https://greenkeeper.io/)
+
 > Neatly dress up your native promises with simple but powerful utils.
 
 [![NPM version][npm-image]][npm-url] [![Downloads][downloads-image]][npm-url] [![Build Status][travis-image]][travis-url] [![Coverage Status][coveralls-image]][coveralls-url] [![Dependency status][david-dm-image]][david-dm-url] [![Dev Dependency status][david-dm-dev-image]][david-dm-dev-url]
