@@ -2,4 +2,5 @@ language: node_js
 node_js:
   - "4"
   - "5"
+  - "10"
 script: "npm run lint && nyc ava test/spec && nyc report --reporter=text-lcov | ./node_modules/.bin/coveralls"
