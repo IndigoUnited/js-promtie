@@ -1,3 +1,7 @@
+# ⚠️ DEPRECATED ⚠️
+
+You should use async/await to deal with promises, and for more complex operations, just use Sindres modules and patterns: https://github.com/sindresorhus/promise-fun
+
 # Promtie 👔
 
 > Neatly dress up your native promises with simple but powerful utils.
